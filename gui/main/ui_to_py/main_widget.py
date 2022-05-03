@@ -10,7 +10,7 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QApplication, QDialog
 
 # from gui.common_widget.dialog_widget.popup_add_data import AddLocationDialog, AddTourType, AddEventType, SurferToHeat
-from gui.common_widget.dialog_widget.popup_add_data import AddLocationDialog
+from gui.common_widget.dialog_widget.popup_add_data import AddLocationDialog, AddTourType
 from gui.main.ui_to_py.wsl_analytics_ui_v2_0 import Ui_Form
 from src.models import AddTour, AddLocation, AddSurfer, LocationLists
 
@@ -70,16 +70,16 @@ class MainWidget(QMainWindow, Ui_Form):
 
     # This defines the event handlers for everything on the Main Widget
     def connect_slots(self):
-        # # Slots for Add Event Tab
-        # self.cb_addevent_year.currentIndexChanged.connect(self.slot_cb_addevent_year_on_index_change)
-        # self.cb_addevent_continent.currentIndexChanged.connect(self.slot_cb_addevent_continent_on_index_change)
-        # self.cb_addevent_country.currentIndexChanged.connect(self.slot_cb_addevent_country_on_index_change)
-        # self.cb_addevent_region.currentIndexChanged.connect(self.slot_cb_addevent_region_on_index_change)
-        #
-        # self.pb_addevent_newtour.clicked.connect(self.slot_pb_addevent_newtour_clicked)
-        # self.pb_addevent_clear.clicked.connect(self.slot_pb_addevent_clear_clicked)
-        # self.pb_addevent_submit.clicked.connect(self.slot_pb_addevent_submit_clicked)
-        #
+        # Slots for Add Event Tab
+        self.cb_addevent_year.currentIndexChanged.connect(self.slot_cb_addevent_year_on_index_change)
+        self.cb_addevent_continent.currentIndexChanged.connect(self.slot_cb_addevent_continent_on_index_change)
+        self.cb_addevent_country.currentIndexChanged.connect(self.slot_cb_addevent_country_on_index_change)
+        self.cb_addevent_region.currentIndexChanged.connect(self.slot_cb_addevent_region_on_index_change)
+
+        self.pb_addevent_newtour.clicked.connect(self.slot_pb_addevent_newtour_clicked)
+        self.pb_addevent_clear.clicked.connect(self.slot_pb_addevent_clear_clicked)
+        self.pb_addevent_submit.clicked.connect(self.slot_pb_addevent_submit_clicked)
+
         # # Slots for Add Heat Tab
         # self.cb_addheat_year.currentIndexChanged.connect(self.slot_cb_addheat_year_on_index_change)
         # self.cb_addheat_tour.currentIndexChanged.connect(self.slot_cb_addheat_tour_on_index_change)
@@ -135,6 +135,54 @@ class MainWidget(QMainWindow, Ui_Form):
 
     ####################################################################################################################
     # Add Event Tab
+
+    def slot_cb_addevent_year_on_index_change(self):
+        pass
+
+    def slot_cb_addevent_continent_on_index_change(self):
+        pass
+
+    def slot_cb_addevent_country_on_index_change(self):
+        pass
+
+    def slot_cb_addevent_region_on_index_change(self):
+        pass
+
+    def slot_pb_addevent_newtour_clicked(self):
+        dialog = AddTourType(title="Add a Tour Type to database.")
+
+        if dialog.exec() == QDialog.Accepted:
+
+            entered_tour_type = dialog.line_tourtype.text()
+
+            entered_year = dialog.line_year.text() if not \
+                dialog.line_year.text() == "" else None
+            if entered_year is not None:
+                entered_year = self.check_for_int(check_string_for_int=entered_year)
+
+            # Grab Male or Female
+            if dialog.chkbox_men.isChecked():
+                if dialog.chkbox_women.isChecked():
+                    print('Dude, we have to separate by gender because of stuff like muscle density to keep it fair.')
+                    raise ValueError
+                entered_gender = 'Men'
+            elif dialog.chkbox_women.isChecked():
+                entered_gender = 'Women'
+            else:
+                print("Bruh, you have to choose a gender for this to work.")
+                raise ValueError
+
+            # Enter a New Tour
+            inst = AddTour(entered_year=entered_year,
+                           entered_gender=entered_gender,
+                           entered_tour_type=entered_tour_type)
+            inst.add_new_tour()
+
+    def slot_pb_addevent_clear_clicked(self):
+        pass
+
+    def slot_pb_addevent_submit_clicked(self):
+        pass
 
     ####################################################################################################################
     # Add Heat Tab

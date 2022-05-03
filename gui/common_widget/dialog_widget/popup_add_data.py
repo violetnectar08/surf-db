@@ -155,6 +155,74 @@ class AddLocationDialog(QDialog):
 
 ########################################################################################################################
 
+class AddTourType(QDialog):
+    def __init__(self,
+                 title,
+                 left=10,
+                 top=10,
+                 width=520,
+                 height=400,
+                 parent=None):
+        # Calls constructor for QDialog
+        QDialog.__init__(self, parent=parent)
+
+        # Set Title of the QDialog.
+        self.setWindowTitle(title)
+
+        # Set Geometry of the QDialog.
+        self.left = left
+        self.top = top
+        self.width = width
+        self.height = height
+        self.setGeometry(left, top, width, height)
+
+        # Disable x button to force "yes" or "no" click
+        self.setWindowFlag(Qt.WindowCloseButtonHint, False)
+        # Disable help button
+        self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
+
+        # Set this custom widget's parent, if it was passed to the constructor function (not None).
+        if not(parent is None):
+            self.setParent(parent)
+
+        # Create Vertical Layout Box.
+        self.layout = QVBoxLayout()
+
+        # Create Horizontal Layouts.
+        self.vlayout_tour = QVBoxLayout()
+
+        # Tour Gender CheckBox
+        self.chkbox_men = PyQt5.QtWidgets.QCheckBox()
+        self.chkbox_men.setText("Men")
+        self.chkbox_women = PyQt5.QtWidgets.QCheckBox()
+        self.chkbox_women.setText("Women")
+        self.vlayout_tour.addWidget(self.chkbox_men)
+        self.vlayout_tour.addWidget(self.chkbox_women)
+
+        # Tour Year Label and Combobox
+        self.vlayout_tour.addWidget(QLabel("Tour Year:"))
+        self.line_year = PyQt5.QtWidgets.QLineEdit()
+        self.vlayout_tour.addWidget(self.line_year)
+        self.line_year.setFixedWidth(200)
+        self.vlayout_tour.addWidget(QLabel(''))
+
+        # Continent Label and Combobox
+        self.vlayout_tour.addWidget(QLabel("Tour Type:"))
+        self.line_tourtype = PyQt5.QtWidgets.QLineEdit()
+        self.vlayout_tour.addWidget(self.line_tourtype)
+        self.line_tourtype.setFixedWidth(200)
+        self.vlayout_tour.addWidget(QLabel(''))
+        self.layout.addLayout(self.vlayout_tour)
+
+        q_btn = QDialogButtonBox.Ok | QDialogButtonBox.Cancel
+        self.ButtonBox = QDialogButtonBox(q_btn)
+        self.ButtonBox.accepted.connect(self.accept)
+        self.ButtonBox.rejected.connect(self.reject)
+        self.layout.addWidget(self.ButtonBox)
+
+        self.setLayout(self.layout)
+
+########################################################################################################################
 
 if __name__ == '__main__':
     # app = QApplication(sys.argv)

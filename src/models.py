@@ -399,7 +399,6 @@ class AddLocation:
                               f"\nEntered Break Name: {self.entered_break_name}")
             raise ValueError(no_entry_error)
 
-    @property
     def add_new_country(self):
         session = Session()
 
