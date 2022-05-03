@@ -192,7 +192,17 @@ class MainWidget(QMainWindow, Ui_Form):
             inst.add_new_tour()
 
     def slot_pb_addevent_clear_clicked(self):
-        pass
+        self.cb_addevent_year.addItems([''] + TourLists.return_tour_years())
+        self.cb_addevent_tourtype.clear()
+        self.line_addevent_name.clear()
+        self.line_addevent_stop.clear()
+        self.line_addevent_open.clear()
+        self.line_addevent_close.clear()
+        self.cb_addevent_continent.clear()
+        self.cb_addevent_continent.addItems([''] + LocationLists.return_continents())
+        self.cb_addevent_country.clear()
+        self.cb_addevent_region.clear()
+        self.cb_addevent_break.clear()
 
     def slot_pb_addevent_submit_clicked(self):
         pass
