@@ -192,6 +192,7 @@ class MainWidget(QMainWindow, Ui_Form):
             inst.add_new_tour()
 
     def slot_pb_addevent_clear_clicked(self):
+        self.cb_addevent_year.clear()
         self.cb_addevent_year.addItems([''] + TourLists.return_tour_years())
         self.cb_addevent_tourtype.clear()
         self.line_addevent_name.clear()
@@ -205,7 +206,35 @@ class MainWidget(QMainWindow, Ui_Form):
         self.cb_addevent_break.clear()
 
     def slot_pb_addevent_submit_clicked(self):
-        pass
+
+        entered_tour_name = self.cb_addevent_tourtype.currentText()
+        entered_event_name = self.line_addevent_name.text()
+
+        entered_stop_nbr = self.line_addevent_stop.text() if not \
+            self.line_addevent_stop.text() == "" else None
+        if entered_stop_nbr is not None:
+            entered_stop_nbr = self.check_for_int(check_string_for_int=entered_stop_nbr)
+
+        entered_continent = self.cb_addevent_continent.currentText()
+        entered_country = self.cb_addevent_country.currentText()
+        entered_region = self.cb_addevent_region.currentText()
+        entered_break_name = self.cb_addevent_break.currentText()
+        entered_open_date = self.line_addevent_open.text()
+        entered_close_date = self.line_addevent_close.text()
+
+        # Enter a New Event
+        inst = AddTour(entered_tour_name=entered_tour_name,
+                       entered_event_name=entered_event_name,
+                       entered_stop_nbr=entered_stop_nbr,
+                       entered_continent=entered_continent,
+                       entered_country=entered_country,
+                       entered_region=entered_region,
+                       entered_break_name=entered_break_name,
+                       entered_open_date=entered_open_date,
+                       entered_close_date=entered_close_date)
+        inst.add_new_event()
+
+        self.slot_pb_addevent_clear_clicked()
 
     ####################################################################################################################
     # Add Heat Tab

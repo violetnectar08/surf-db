@@ -1097,8 +1097,8 @@ class AddTour:
         self.was_break_name_entered()
 
         # Check to see if the entered_event exists in the entered_tour
-        query = (select(Event.event_name)
-                 .join(Tour, Tour.tour_id == Tour.tour_id)
+        query = (select(Event.event_id)
+                 .join(Tour, Tour.tour_id == Event.tour_id)
                  .where(
                  and_(
                       Tour.tour_name == self.entered_tour_name,
