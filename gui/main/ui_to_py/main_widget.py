@@ -139,16 +139,27 @@ class MainWidget(QMainWindow, Ui_Form):
     # Add Event Tab
 
     def slot_cb_addevent_year_on_index_change(self):
-        pass
+        self.cb_addevent_tourtype.clear()
+        return_tour_name_inst = TourLists(entered_year=self.cb_addevent_year.currentText())
+        self.cb_addevent_tourtype.addItems([''] + return_tour_name_inst.return_tour_name_from_year())
 
     def slot_cb_addevent_continent_on_index_change(self):
-        pass
+        self.cb_addevent_country.clear()
+        return_country_inst = LocationLists(entered_continent=self.cb_addevent_continent.currentText())
+        self.cb_addevent_country.addItems([''] + return_country_inst.return_countries_from_continents())
 
     def slot_cb_addevent_country_on_index_change(self):
-        pass
+        self.cb_addevent_region.clear()
+        return_region_inst = LocationLists(entered_continent=self.cb_addevent_continent.currentText(),
+                                           entered_country=self.cb_addevent_country.currentText())
+        self.cb_addevent_region.addItems([''] + return_region_inst.return_regions_from_countries())
 
     def slot_cb_addevent_region_on_index_change(self):
-        pass
+        self.cb_addevent_break.clear()
+        return_break_name_inst = LocationLists(entered_continent=self.cb_addevent_continent.currentText(),
+                                               entered_country=self.cb_addevent_country.currentText(),
+                                               entered_region=self.cb_addevent_region.currentText())
+        self.cb_addevent_break.addItems(([''] + return_break_name_inst.return_breaks_from_regions()))
 
     def slot_pb_addevent_newtour_clicked(self):
         dialog = AddTourType(title="Add a Tour Type to database.")

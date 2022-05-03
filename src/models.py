@@ -1515,10 +1515,31 @@ class LocationLists:
 
         return city_list
 
+    def return_breaks_from_regions(self):
+        session = Session()
+
+        query = session.query(Break.break_name)\
+                        .join(Region)\
+                        .join(Country)\
+                        .join(Continent)\
+                        .filter(Continent.continent == {self.entered_continent},
+                                Country.country == {self.entered_country},
+                                Region.region == {self.entered_region})
+
+        break_name_list = []
+        for break_name in query:
+            break_name_list.append(break_name[0])
+
+        session.close
+
+        return break_name_list
+
 # 7.0 - Return Tours
 class TourLists:
-    def __init__(self):
-        pass
+    def __init__(self,
+                 entered_year: Optional[int] = None):
+
+        self.entered_year: Optional[int] = entered_year
 
     @staticmethod
     def return_tour_years():
@@ -1534,6 +1555,19 @@ class TourLists:
             year_list.append(str(year[0]))
 
         return year_list
+
+    def return_tour_name_from_year(self):
+        session = Session()
+
+        query = session.query(Tour.tour_name) \
+                       .filter(Tour.year == {self.entered_year}) \
+                       .order_by(Tour.tour_name) \
+
+        tour_name_list = []
+        for tour_name in query:
+            tour_name_list.append(tour_name[0])
+
+        return tour_name_list
 
 ########################################################################################################################
 # 6.0 - Testing
