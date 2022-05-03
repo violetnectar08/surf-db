@@ -228,5 +228,5 @@ if __name__ == '__main__':
     # app = QApplication(sys.argv)
     win = AddLocationDialog(title='Add a New Location')
     win.show()
-    sys.exit(app.exec_())
+    sys.exit(win.exec_())
 

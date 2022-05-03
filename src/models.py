@@ -1515,7 +1515,25 @@ class LocationLists:
 
         return city_list
 
+# 7.0 - Return Tours
+class TourLists:
+    def __init__(self):
+        pass
 
+    @staticmethod
+    def return_tour_years():
+        session = Session()
+
+        query = session.query(Tour.year) \
+            .distinct() \
+            .order_by(Tour.year) \
+            .all()
+
+        year_list = []
+        for year in query:
+            year_list.append(str(year[0]))
+
+        return year_list
 
 ########################################################################################################################
 # 6.0 - Testing

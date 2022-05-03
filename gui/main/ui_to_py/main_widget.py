@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QDialog
 # from gui.common_widget.dialog_widget.popup_add_data import AddLocationDialog, AddTourType, AddEventType, SurferToHeat
 from gui.common_widget.dialog_widget.popup_add_data import AddLocationDialog, AddTourType
 from gui.main.ui_to_py.wsl_analytics_ui_v2_0 import Ui_Form
-from src.models import AddTour, AddLocation, AddSurfer, LocationLists
+from src.models import AddTour, AddLocation, AddSurfer, LocationLists, TourLists
 
 
 ########################################################################################################################
@@ -120,6 +120,8 @@ class MainWidget(QMainWindow, Ui_Form):
     # Everything that should happen when the app has started up
     def on_startup(self):
         # Add Event Tab
+        self.cb_addevent_continent.addItems([''] + LocationLists.return_continents())
+        self.cb_addevent_year.addItems([''] + TourLists.return_tour_years())
 
         # Add Heat Tab
 
