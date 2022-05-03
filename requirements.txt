@@ -1,0 +1,5 @@
+mysql
+pymysql
+sqlalchemy
+pyqt5
+cryptography
