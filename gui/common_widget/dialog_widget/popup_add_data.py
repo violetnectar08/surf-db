@@ -153,8 +153,8 @@ class AddLocationDialog(QDialog):
                                            entered_country=self.cb_country.currentText())
         self.cb_region.addItems([''] + return_region_inst.return_regions_from_countries())
 
-########################################################################################################################
 
+########################################################################################################################
 class AddTourType(QDialog):
     def __init__(self,
                  title,
@@ -213,6 +213,60 @@ class AddTourType(QDialog):
         self.line_tourtype.setFixedWidth(200)
         self.vlayout_tour.addWidget(QLabel(''))
         self.layout.addLayout(self.vlayout_tour)
+
+        q_btn = QDialogButtonBox.Ok | QDialogButtonBox.Cancel
+        self.ButtonBox = QDialogButtonBox(q_btn)
+        self.ButtonBox.accepted.connect(self.accept)
+        self.ButtonBox.rejected.connect(self.reject)
+        self.layout.addWidget(self.ButtonBox)
+
+        self.setLayout(self.layout)
+
+
+########################################################################################################################
+class AddRoundType(QDialog):
+    def __init__(self,
+                 title,
+                 left=10,
+                 top=10,
+                 width=520,
+                 height=400,
+                 parent=None):
+        # Calls constructor for QDialog
+        QDialog.__init__(self, parent=parent)
+
+        # Set Title of the QDialog.
+        self.setWindowTitle(title)
+
+        # Set Geometry of the QDialog.
+        self.left = left
+        self.top = top
+        self.width = width
+        self.height = height
+        self.setGeometry(left, top, width, height)
+
+        # Disable x button to force "yes" or "no" click
+        self.setWindowFlag(Qt.WindowCloseButtonHint, False)
+        # Disable help button
+        self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
+
+        # Set this custom widget's parent, if it was passed to the constructor function (not None).
+        if not(parent is None):
+            self.setParent(parent)
+
+        # Create Vertical Layout Box.
+        self.layout = QVBoxLayout()
+
+        # Create Horizontal Layouts.
+        self.vlayout_round = QVBoxLayout()
+
+        # Event Label and Combobox
+        self.vlayout_round.addWidget(QLabel("Round Type:"))
+        self.line_round = PyQt5.QtWidgets.QLineEdit()
+        self.vlayout_round.addWidget(self.line_round)
+        self.line_round.setFixedWidth(200)
+        self.vlayout_round.addWidget(QLabel(''))
+        self.layout.addLayout(self.vlayout_round)
 
         q_btn = QDialogButtonBox.Ok | QDialogButtonBox.Cancel
         self.ButtonBox = QDialogButtonBox(q_btn)

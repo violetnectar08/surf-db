@@ -1569,6 +1569,10 @@ class TourLists:
 
         return tour_name_list
 
+    @staticmethod
+    def return_all_rounds():
+        pass
+
 ########################################################################################################################
 # 6.0 - Testing
 

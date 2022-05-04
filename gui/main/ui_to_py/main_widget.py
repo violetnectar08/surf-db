@@ -9,8 +9,8 @@ import re
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QApplication, QDialog
 
-# from gui.common_widget.dialog_widget.popup_add_data import AddLocationDialog, AddTourType, AddEventType, SurferToHeat
-from gui.common_widget.dialog_widget.popup_add_data import AddLocationDialog, AddTourType
+# from gui.common_widget.dialog_widget.popup_add_data import AddLocationDialog, AddTourType, AddRoundType, SurferToHeat
+from gui.common_widget.dialog_widget.popup_add_data import AddLocationDialog, AddTourType, AddRoundType
 from gui.main.ui_to_py.wsl_analytics_ui_v2_0 import Ui_Form
 from src.models import AddTour, AddLocation, AddSurfer, LocationLists, TourLists
 
@@ -80,16 +80,16 @@ class MainWidget(QMainWindow, Ui_Form):
         self.pb_addevent_clear.clicked.connect(self.slot_pb_addevent_clear_clicked)
         self.pb_addevent_submit.clicked.connect(self.slot_pb_addevent_submit_clicked)
 
-        # # Slots for Add Heat Tab
-        # self.cb_addheat_year.currentIndexChanged.connect(self.slot_cb_addheat_year_on_index_change)
-        # self.cb_addheat_tour.currentIndexChanged.connect(self.slot_cb_addheat_tour_on_index_change)
-        #
-        # self.pb_addheat_newround.clicked.connect(self.slot_pb_addheat_newround_clicked)
-        # self.pb_addheat_clear.clicked.connect(self.slot_pb_addheat_clear_clicked)
-        # self.pb_addheat_submit.clicked.connect(self.slot_pb_addheat_submit_clicked)
-        # self.pb_addheat_surfers.clicked.connect(self.slot_pb_addheat_surfers_clicked)
-        #
-        # # Slots for Add Round Results Tab
+        # Slots for Add Heat Tab
+        self.cb_addheat_year.currentIndexChanged.connect(self.slot_cb_addheat_year_on_index_change)
+        self.cb_addheat_tour.currentIndexChanged.connect(self.slot_cb_addheat_tour_on_index_change)
+
+        self.pb_addheat_newround.clicked.connect(self.slot_pb_addheat_newround_clicked)
+        self.pb_addheat_clear.clicked.connect(self.slot_pb_addheat_clear_clicked)
+        self.pb_addheat_submit.clicked.connect(self.slot_pb_addheat_submit_clicked)
+        self.pb_addheat_surfers.clicked.connect(self.slot_pb_addheat_surfers_clicked)
+
+        # # Slots for Add Heat Results Tab
         # self.cb_addresults_year.currentIndexChanged.connect(self.slot_cb_addresults_year_on_index_change)
         # self.cb_addresults_tour.currentIndexChanged.connect(self.slot_cb_addresults_tour_on_index_change)
         # self.cb_addresults_event.currentIndexChanged.connect(self.slot_cb_addresults_round_on_index_change)
@@ -124,8 +124,11 @@ class MainWidget(QMainWindow, Ui_Form):
         self.cb_addevent_year.addItems([''] + TourLists.return_tour_years())
 
         # Add Heat Tab
+        # self.cb_addheat_year.addItems([''] + TourLists.return_tour_years())
+        # self.cb_addheat_round.addItems([''] + TourLists.return_all_rounds())
 
         # Add Round Results Tab
+
         # Add Tour Years
 
         # Add Break Tab
@@ -238,6 +241,31 @@ class MainWidget(QMainWindow, Ui_Form):
 
     ####################################################################################################################
     # Add Heat Tab
+
+    def slot_cb_addheat_year_on_index_change(self):
+        pass
+
+    def slot_cb_addheat_tour_on_index_change(self):
+        pass
+
+    def slot_pb_addheat_newround_clicked(self):
+        dialog = AddRoundType(title="Add a Tour Type to database.")
+
+        if dialog.exec() == QDialog.Accepted:
+            entered_round = dialog.line_round.text()
+
+            new_round = AddTour(entered_round=entered_round)
+
+            new_round.add_new_round()
+
+    def slot_pb_addheat_clear_clicked(self):
+        pass
+
+    def slot_pb_addheat_submit_clicked(self):
+        pass
+
+    def slot_pb_addheat_surfers_clicked(self):
+        pass
 
     ####################################################################################################################
     # Add Results Tab
