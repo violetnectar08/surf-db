@@ -570,6 +570,7 @@ class MainWidget(QMainWindow, Ui_Form):
         inst.add_new_heat_results()
 
         self.slot_pb_addresults_clear_clicked()
+        self.slot_cb_addresults_surfer_on_index_change()
 
     ####################################################################################################################
     #  Add Break Tab
