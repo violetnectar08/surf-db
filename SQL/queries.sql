@@ -28,7 +28,7 @@ join wsl.continent continent on continent.continent_id = country.continent_id
 select * from wsl.surfers;
 
 select 	gender,
-		first_name,
+				first_name,
         last_name,
         stance,
         rep_country.country as rep_country,
@@ -89,6 +89,46 @@ join wsl.surfers surfers
 		on surfers.surfer_id = heat_surfers.surfer_id
 join wsl.heat_details heat_details
 		on heat_details.heat_id = heat_surfers.heat_id
+join wsl.event event
+		on event.event_id = heat_details.event_id
+join wsl.round round
+		on round.round_id = heat_details.round_id
+join wsl.tour tour
+		on tour.tour_id = event.event_id
+;
+
+-- heat Results
+select 	tour.tour_name,
+		event.event_name,
+        round.round,
+        heat_details.heat_nbr,
+        heat_results.surfer_in_heat_id,
+		surfers.full_name,
+        heat_results.status,
+        heat_results.pick_to_win_percent,
+        heat_results.jersey_color,
+        heat_results.wave_1,
+        heat_results.wave_2,
+        heat_results.wave_3,
+        heat_results.wave_4,
+        heat_results.wave_5,
+        heat_results.wave_6,
+        heat_results.wave_7,
+        heat_results.wave_8,
+        heat_results.wave_9,
+        heat_results.wave_10,
+        heat_results.wave_11,
+        heat_results.wave_12,
+        heat_results.wave_13,
+        heat_results.wave_14,
+        heat_results.wave_15
+from wsl.heat_results heat_results
+join wsl.heat_surfers heat_surfers
+		on heat_surfers.surfer_heat_id = heat_results.surfer_in_heat_id
+join wsl.surfers surfers
+		on surfers.surfer_id = heat_surfers.surfer_id
+join wsl.heat_details heat_details
+		on heat_details.heat_id = heat_results.heat_id
 join wsl.event event
 		on event.event_id = heat_details.event_id
 join wsl.round round

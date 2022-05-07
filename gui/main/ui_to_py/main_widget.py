@@ -366,6 +366,7 @@ class MainWidget(QMainWindow, Ui_Form):
                            entered_surfer=entered_surfer
                            )
             inst.add_new_surfers_to_heat()
+
     ####################################################################################################################
     # Add Results Tab
 
@@ -422,7 +423,153 @@ class MainWidget(QMainWindow, Ui_Form):
         self.line_addresults_15.clear()
 
     def slot_pb_addresults_submit_clicked(self):
-        pass
+
+        entered_tour_name = self.cb_addresults_tour.currentText()
+        entered_event_name = self.cb_addresults_event.currentText()
+        entered_round = self.cb_addresults_round.currentText()
+        entered_heat_nbr = self.cb_addresults_heat.currentText()
+        entered_surfer = self.cb_addresults_surfer.currentText()
+
+        entered_pick_to_win_percent = self.line_addresults_picks.text() if not \
+            self.line_addresults_picks.text() == "" else None
+        if entered_pick_to_win_percent is not None:
+            entered_pick_to_win_percent = self.check_for_float(check_string_for_float=entered_pick_to_win_percent)
+
+        # Grab Jersey Color
+        jersey_color_list = []
+        if self.check_addresults_jersey_yellow.isChecked():
+            jersey_color_list.append('Yellow')
+        if self.check_addresults_jersey_red.isChecked():
+            jersey_color_list.append('Red')
+        if self.check_addresults_jersey_black.isChecked():
+            jersey_color_list.append('Black')
+        if self.check_addresults_jersey_white.isChecked():
+            jersey_color_list.append('White')
+        if self.check_addresults_jersey_blue.isChecked():
+            jersey_color_list.append('Blue')
+        if self.check_addresults_jersey_pink.isChecked():
+            jersey_color_list.append('Pink')
+
+        # Turn List of jersey colors into a string for mysql table
+        # If jersey color is unknown assign None
+        entered_jersey_color = ", ".join(jersey_color_list) if not ", ".join(jersey_color_list) == "" else None
+
+        # Grab Status
+        entered_status = None
+        if self.check_addresults_advanced.isChecked() and self.check_addresults_eliminated.isChecked():
+            print(f"Did {self.cb_addresults_surfer} advance?"
+                  f"\nYou checked both advanced and eliminated.")
+        elif not self.check_addresults_advanced.isChecked() and not self.check_addresults_eliminated.isChecked():
+            print(f"Did {self.cb_addresults_surfer} advance?"
+                  f"\nYou did not check advanced or eliminated.")
+        elif self.check_addresults_advanced.isChecked() and not self.check_addresults_eliminated.isChecked():
+            entered_status = 'Advanced'
+        elif not self.check_addresults_advanced.isChecked() and self.check_addresults_eliminated.isChecked():
+            entered_status = 'Eliminated'
+
+        entered_wave_1 = self.line_addresults_1.text() if not \
+            self.line_addresults_1.text() == "" else None
+        if entered_wave_1 is not None:
+            entered_wave_1 = self.check_for_float(check_string_for_float=entered_wave_1)
+
+        entered_wave_2 = self.line_addresults_2.text() if not \
+            self.line_addresults_2.text() == "" else None
+        if entered_wave_2 is not None:
+            entered_wave_2 = self.check_for_float(check_string_for_float=entered_wave_2)
+
+        entered_wave_3 = self.line_addresults_3.text() if not \
+            self.line_addresults_3.text() == "" else None
+        if entered_wave_3 is not None:
+            entered_wave_3 = self.check_for_float(check_string_for_float=entered_wave_3)
+
+        entered_wave_4 = self.line_addresults_4.text() if not \
+            self.line_addresults_4.text() == "" else None
+        if entered_wave_4 is not None:
+            entered_wave_4 = self.check_for_float(check_string_for_float=entered_wave_4)
+
+        entered_wave_5 = self.line_addresults_5.text() if not \
+            self.line_addresults_5.text() == "" else None
+        if entered_wave_5 is not None:
+            entered_wave_5 = self.check_for_float(check_string_for_float=entered_wave_5)
+
+        entered_wave_6 = self.line_addresults_6.text() if not \
+            self.line_addresults_6.text() == "" else None
+        if entered_wave_6 is not None:
+            entered_wave_6 = self.check_for_float(check_string_for_float=entered_wave_6)
+
+        entered_wave_7 = self.line_addresults_7.text() if not \
+            self.line_addresults_7.text() == "" else None
+        if entered_wave_7 is not None:
+            entered_wave_7 = self.check_for_float(check_string_for_float=entered_wave_7)
+
+        entered_wave_8 = self.line_addresults_8.text() if not \
+            self.line_addresults_8.text() == "" else None
+        if entered_wave_8 is not None:
+            entered_wave_8 = self.check_for_float(check_string_for_float=entered_wave_8)
+
+        entered_wave_9 = self.line_addresults_9.text() if not \
+            self.line_addresults_9.text() == "" else None
+        if entered_wave_9 is not None:
+            entered_wave_9 = self.check_for_float(check_string_for_float=entered_wave_9)
+
+        entered_wave_10 = self.line_addresults_10.text() if not \
+            self.line_addresults_10.text() == "" else None
+        if entered_wave_10 is not None:
+            entered_wave_10 = self.check_for_float(check_string_for_float=entered_wave_10)
+
+        entered_wave_11 = self.line_addresults_11.text() if not \
+            self.line_addresults_11.text() == "" else None
+        if entered_wave_11 is not None:
+            entered_wave_11 = self.check_for_float(check_string_for_float=entered_wave_11)
+
+        entered_wave_12 = self.line_addresults_12.text() if not \
+            self.line_addresults_12.text() == "" else None
+        if entered_wave_12 is not None:
+            entered_wave_12 = self.check_for_float(check_string_for_float=entered_wave_12)
+
+        entered_wave_13 = self.line_addresults_13.text() if not \
+            self.line_addresults_13.text() == "" else None
+        if entered_wave_13 is not None:
+            entered_wave_13 = self.check_for_float(check_string_for_float=entered_wave_13)
+
+        entered_wave_14 = self.line_addresults_14.text() if not \
+            self.line_addresults_14.text() == "" else None
+        if entered_wave_14 is not None:
+            entered_wave_14 = self.check_for_float(check_string_for_float=entered_wave_14)
+
+        entered_wave_15 = self.line_addresults_15.text() if not \
+            self.line_addresults_15.text() == "" else None
+        if entered_wave_15 is not None:
+            entered_wave_15 = self.check_for_float(check_string_for_float=entered_wave_15)
+
+        # Add New Heat Results
+        inst = AddTour(entered_tour_name=entered_tour_name,
+                       entered_event_name=entered_event_name,
+                       entered_round=entered_round,
+                       entered_heat_nbr=entered_heat_nbr,
+                       entered_surfer=entered_surfer,
+                       entered_pick_to_win_percent=entered_pick_to_win_percent,
+                       entered_jersey_color=entered_jersey_color,
+                       entered_status=entered_status,
+                       entered_wave_1=entered_wave_1,
+                       entered_wave_2=entered_wave_2,
+                       entered_wave_3=entered_wave_3,
+                       entered_wave_4=entered_wave_4,
+                       entered_wave_5=entered_wave_5,
+                       entered_wave_6=entered_wave_6,
+                       entered_wave_7=entered_wave_7,
+                       entered_wave_8=entered_wave_8,
+                       entered_wave_9=entered_wave_9,
+                       entered_wave_10=entered_wave_10,
+                       entered_wave_11=entered_wave_11,
+                       entered_wave_12=entered_wave_12,
+                       entered_wave_13=entered_wave_13,
+                       entered_wave_14=entered_wave_14,
+                       entered_wave_15=entered_wave_15
+                       )
+        inst.add_new_heat_results()
+
+        self.slot_pb_addresults_clear_clicked()
 
     ####################################################################################################################
     #  Add Break Tab
