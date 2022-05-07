@@ -10,7 +10,7 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QApplication, QDialog
 
 # from gui.common_widget.dialog_widget.popup_add_data import AddLocationDialog, AddTourType, AddRoundType, SurferToHeat
-from gui.common_widget.dialog_widget.popup_add_data import AddLocationDialog, AddTourType, AddRoundType
+from gui.common_widget.dialog_widget.popup_add_data import AddLocationDialog, AddTourType, AddRoundType, SurferToHeat
 from gui.main.ui_to_py.wsl_analytics_ui_v2_0 import Ui_Form
 from src.models import AddTour, AddLocation, AddSurfer, LocationLists, TourLists
 
@@ -265,7 +265,6 @@ class MainWidget(QMainWindow, Ui_Form):
         self.cb_addheat_round.clear()
         self.cb_addheat_round.addItems([''] + TourLists.return_all_rounds())
 
-
     def slot_pb_addheat_clear_clicked(self):
         self.cb_addheat_year.clear()
         self.cb_addheat_year.addItems([''] + TourLists.return_tour_years())
@@ -338,8 +337,25 @@ class MainWidget(QMainWindow, Ui_Form):
                        entered_wave_max=entered_wave_max)
         inst.add_new_heat_details()
 
+        self.slot_pb_addheat_clear_clicked()
+
     def slot_pb_addheat_surfers_clicked(self):
-        pass
+
+        prev_selected_year = self.cb_addheat_year.currentText()
+        prev_selected_tour = self.cb_addheat_tour.currentText()
+        prev_selected_event = self.cb_addheat_event.currentText()
+        prev_selected_round = self.cb_addheat_round.currentText()
+        prev_selected_heat = self.line_addheat_heat.text()
+
+        dialog = SurferToHeat(title='Add a surfer to the heat.',
+                              prev_selected_year=prev_selected_year,
+                              prev_selected_tour=prev_selected_tour,
+                              prev_selected_event=prev_selected_event,
+                              prev_selected_round=prev_selected_round,
+                              prev_selected_heat=prev_selected_heat)
+
+        if dialog.exec() == QDialog.Accepted:
+            entered_name=dialog.cb_surfer.text()
 
     ####################################################################################################################
     # Add Results Tab

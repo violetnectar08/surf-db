@@ -1599,6 +1599,32 @@ class TourLists:
 
         return event_name_list
 
+
+# 8.0 - Return Tours
+class SurferLists:
+    def __init__(self,
+                 entered_full_name: Optional[str] = None,
+                 entered_rep_continent: Optional[str] = None,
+                 entered_rep_country: Optional[str] = None):
+
+        self.entered_full_name: Optional[str] = entered_full_name
+        self.entered_rep_country: Optional[str] = entered_rep_continent
+        self.entered_rep_country: Optional[str] = entered_rep_country
+
+    @staticmethod
+    def return_all_surfers():
+        session = Session()
+
+        query = session.query(Surfers.full_name) \
+                       .distinct() \
+                       .order_by(Surfers.full_name) \
+                       .all()
+
+        full_name_list = []
+        for full_name in query:
+            full_name_list.append(str(full_name[0]))
+
+        return full_name_list
 ########################################################################################################################
 # 6.0 - Testing
 

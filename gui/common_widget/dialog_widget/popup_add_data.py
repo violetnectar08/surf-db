@@ -11,7 +11,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLabel, QApplication, QDialogButtonBox, QPushButton
 
 ########################################################################################################################
-from src.models import LocationLists, AddLocation
+from src.models import LocationLists, AddLocation, SurferLists
 
 
 class AddLocationDialog(QDialog):
@@ -154,7 +154,6 @@ class AddLocationDialog(QDialog):
         self.cb_region.addItems([''] + return_region_inst.return_regions_from_countries())
 
 
-########################################################################################################################
 class AddTourType(QDialog):
     def __init__(self,
                  title,
@@ -223,7 +222,6 @@ class AddTourType(QDialog):
         self.setLayout(self.layout)
 
 
-########################################################################################################################
 class AddRoundType(QDialog):
     def __init__(self,
                  title,
@@ -275,6 +273,120 @@ class AddRoundType(QDialog):
         self.layout.addWidget(self.ButtonBox)
 
         self.setLayout(self.layout)
+
+
+class SurferToHeat(QDialog):
+    def __init__(self,
+                 title,
+                 left=10,
+                 top=10,
+                 width=520,
+                 height=400,
+                 prev_selected_year: Optional[str] = None,
+                 prev_selected_tour: Optional[str] = None,
+                 prev_selected_event: Optional[str] = None,
+                 prev_selected_round: Optional[str] = None,
+                 prev_selected_heat: Optional[str] = None,
+                 parent=None):
+        # Calls constructor for QDialog
+        QDialog.__init__(self, parent=parent)
+
+        self.prev_selected_year: Optional[str] = prev_selected_year
+        self.prev_selected_tour: Optional[str] = prev_selected_tour
+        self.prev_selected_event: Optional[str] = prev_selected_event
+        self.prev_selected_round: Optional[str] = prev_selected_round
+        self.prev_selected_heat: Optional[str] = prev_selected_heat
+
+        # Set Title of the QDialog.
+        self.setWindowTitle(title)
+
+        # Set Geometry of the QDialog.
+        self.left = left
+        self.top = top
+        self.width = width
+        self.height = height
+        self.setGeometry(left, top, width, height)
+
+        # Disable x button to force "yes" or "no" click
+        self.setWindowFlag(Qt.WindowCloseButtonHint, False)
+        # Disable help button
+        self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
+
+        # Set this custom widget's parent, if it was passed to the constructor function (not None).
+        if not (parent is None):
+            self.setParent(parent)
+
+        # Create Vertical Layout Box.
+        self.layout = QVBoxLayout()
+
+        # Create Horizontal Layouts.
+        self.hlayout_year = QHBoxLayout()
+
+        # Tour Year Label and Combobox
+        self.hlayout_year.addWidget(QLabel("Tour Year:"))
+        self.hlayout_year.addWidget(QLabel(self.prev_selected_year))
+        self.layout.addLayout(self.hlayout_year)
+
+        # Create Horizontal Layouts.
+        self.hlayout_tour = QHBoxLayout()
+
+        # Tour Year Label and Combobox
+        self.hlayout_tour.addWidget(QLabel("Tour Name:"))
+        self.hlayout_tour.addWidget(QLabel(self.prev_selected_tour))
+        self.layout.addLayout(self.hlayout_tour)
+
+        # Create Horizontal Layouts.
+        self.hlayout_event = QHBoxLayout()
+
+        # Tour Year Label and Combobox
+        self.hlayout_event.addWidget(QLabel("Event:"))
+        self.hlayout_event.addWidget(QLabel(self.prev_selected_event))
+        self.layout.addLayout(self.hlayout_event)
+
+        # Create Horizontal Layouts.
+        self.hlayout_round = QHBoxLayout()
+
+        # Tour Year Label and Combobox
+        self.hlayout_round.addWidget(QLabel("Round:"))
+        self.hlayout_round.addWidget(QLabel(self.prev_selected_round))
+        self.layout.addLayout(self.hlayout_round)
+
+        # Create Horizontal Layouts.
+        self.hlayout_heat = QHBoxLayout()
+
+        # Tour Year Label and Combobox
+        self.hlayout_heat.addWidget(QLabel("Heat:"))
+        self.hlayout_heat.addWidget(QLabel(self.prev_selected_heat))
+        self.layout.addLayout(self.hlayout_heat)
+
+        # Create Horizontal Layouts.
+        self.hlayout_surfer = QHBoxLayout()
+
+        # Tour Year Label and Combobox
+        self.hlayout_surfer.addWidget(QLabel("Surfer:"))
+        self.cb_surfer = PyQt5.QtWidgets.QComboBox()
+        self.hlayout_surfer.addWidget(self.cb_surfer)
+        self.cb_surfer.setFixedWidth(200)
+        self.hlayout_surfer.addWidget(QLabel(''))
+        self.cb_surfer.addItems([''] + SurferLists.return_all_surfers())
+        self.layout.addLayout(self.hlayout_surfer)
+
+        # Add Button To Submit Data to Table
+        self.add_surfer = PyQt5.QtWidgets.QPushButton("Add to Round")
+        self.add_surfer.setFixedWidth(200)
+        self.add_surfer.setFixedHeight(50)
+        self.add_surfer.setDefault(True)
+        # self.add_surfer.clicked.connect(lambda: self.whichbtn(self.b4))
+        self.layout.addWidget(self.add_surfer)
+
+        q_btn = QDialogButtonBox.Ok | QDialogButtonBox.Cancel
+        self.ButtonBox = QDialogButtonBox(q_btn)
+        self.ButtonBox.accepted.connect(self.accept)
+        self.ButtonBox.rejected.connect(self.reject)
+        self.layout.addWidget(self.ButtonBox)
+
+        self.setLayout(self.layout)
+
 
 ########################################################################################################################
 
