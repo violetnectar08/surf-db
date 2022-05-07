@@ -252,6 +252,7 @@ class MainWidget(QMainWindow, Ui_Form):
         return_event_name_inst = TourLists(entered_tour_name=self.cb_addheat_tour.currentText())
         self.cb_addheat_event.addItems([''] + return_event_name_inst.return_event_name_from_tour_name())
 
+    @staticmethod
     def slot_pb_addheat_newround_clicked(self):
         dialog = AddRoundType(title="Add a Tour Type to database.")
 
@@ -281,7 +282,54 @@ class MainWidget(QMainWindow, Ui_Form):
         self.line_addheat_wavemax.clear()
 
     def slot_pb_addheat_submit_clicked(self):
-        pass
+
+        entered_tour_name = self.cb_addheat_tour.currentText()
+        entered_event_name = self.cb_addheat_event.currentText()
+        entered_round = self.cb_addheat_round.currentText()
+        entered_heat_nbr = self.line_addheat_heat.text()
+        entered_heat_date = self.line_addheat_date.text()
+
+        entered_duration = self.line_addheat_duration.text() if not \
+            self.line_addheat_duration.text() == "" else None
+        if entered_duration is not None:
+            entered_duration = self.check_for_int(check_string_for_int=entered_duration)
+
+        entered_wave_min = self.line_addheat_wavemin.text() if not \
+            self.line_addheat_wavemin.text() == "" else None
+        if entered_wave_min is not None:
+            entered_wave_min = self.check_for_int(check_string_for_int=entered_wave_min)
+
+        entered_wave_max = self.line_addheat_wavemax.text() if not \
+            self.line_addheat_wavemax.text() == "" else None
+        if entered_wave_max is not None:
+            entered_wave_max = self.check_for_int(check_string_for_int=entered_wave_max)
+
+        # Grab Wind Type
+        wind_type_list = []
+        if self.check_addheat_calm.isChecked():
+            wind_type_list.append('Calm')
+        if self.check_addheat_light.isChecked():
+            wind_type_list.append('Light')
+        if self.check_addheat_onshore.isChecked():
+            wind_type_list.append('Onshore')
+        if self.check_addheat_offshore.isChecked():
+            wind_type_list.append('Offshore')
+        if self.check_addheat_cross.isChecked():
+            wind_type_list.append('Cross')
+        if self.check_addheat_storm.isChecked():
+            wind_type_list.append('Storm')
+
+        # Enter details for a new heat
+        inst = AddTour(entered_heat_nbr='1',
+                       entered_tour_name='2022 Mens Championship Tour',
+                       entered_event_name='Billabong Prop Pipeline',
+                       entered_round='Opening Round',
+                       entered_wind='Calm',
+                       entered_heat_date='2022-01-29',
+                       entered_duration=30,
+                       entered_wave_min=4,
+                       entered_wave_max=6)
+        inst.add_new_heat_details()
 
     def slot_pb_addheat_surfers_clicked(self):
         pass
