@@ -254,14 +254,14 @@ class MainWidget(QMainWindow, Ui_Form):
 
     def slot_pb_addheat_newround_clicked(self):
         pass
-    #     dialog = AddRoundType(title="Add a Tour Type to database.")
-    #
-    #     if dialog.exec() == QDialog.Accepted:
-    #         entered_round = dialog.line_round.text()
-    #
-    #         new_round = AddTour(entered_round=entered_round)
-    #
-    #         new_round.add_new_round()
+        dialog = AddRoundType(title="Add a Tour Type to database.")
+
+        if dialog.exec() == QDialog.Accepted:
+            entered_round = dialog.line_round.text()
+
+            new_round = AddTour(entered_round=entered_round)
+
+            new_round.add_new_round()
 
     def slot_pb_addheat_clear_clicked(self):
         pass
