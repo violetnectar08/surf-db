@@ -128,7 +128,8 @@ class MainWidget(QMainWindow, Ui_Form):
         self.cb_addheat_round.addItems([''] + TourLists.return_all_rounds())
 
         # Add Round Results Tab
-        
+        self.cb_addresults_year.addItems([''] + TourLists.return_tour_years())
+        self.cb_addresults_round.addItems([''] + TourLists.return_all_rounds())
 
         # Add Tour Years
 
