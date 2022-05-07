@@ -843,7 +843,7 @@ class AddTour:
                  entered_round: Optional[str] = None,
                  entered_heat_nbr: Optional[str] = None,
                  entered_wind: Optional[str] = None,
-                 entered_heat_date: Optional = None,
+                 entered_heat_date: Optional[str] = None,
                  entered_duration: Optional[int] = None,
                  entered_wave_min: Optional[int] = None,
                  entered_wave_max: Optional[int] = None,
@@ -878,7 +878,7 @@ class AddTour:
         self.entered_region: Optional[str] = entered_region
         self.entered_break_name: Optional[str] = entered_break_name
         self.entered_open_date: Optional = entered_open_date
-        self.entered_close_date: Optional = entered_close_date
+        self.entered_close_date: Optional[str] = entered_close_date
         self.entered_round: Optional[str] = entered_round
         self.entered_heat_nbr: Optional[str] = entered_heat_nbr
         self.entered_wind: Optional[str] = entered_wind

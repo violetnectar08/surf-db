@@ -322,16 +322,20 @@ class MainWidget(QMainWindow, Ui_Form):
         if self.check_addheat_storm.isChecked():
             wind_type_list.append('Storm')
 
+        # Turn List of wind types into a string for mysql table
+        # If wind type is unknown assign None
+        entered_wind = ", ".join(wind_type_list) if not ", ".join(wind_type_list) == "" else None
+
         # Enter details for a new heat
-        inst = AddTour(entered_heat_nbr='1',
-                       entered_tour_name='2022 Mens Championship Tour',
-                       entered_event_name='Billabong Prop Pipeline',
-                       entered_round='Opening Round',
-                       entered_wind='Calm',
-                       entered_heat_date='2022-01-29',
-                       entered_duration=30,
-                       entered_wave_min=4,
-                       entered_wave_max=6)
+        inst = AddTour(entered_heat_nbr=entered_heat_nbr,
+                       entered_tour_name=entered_tour_name,
+                       entered_event_name=entered_event_name,
+                       entered_round=entered_round,
+                       entered_wind=entered_wind,
+                       entered_heat_date=entered_heat_date,
+                       entered_duration=entered_duration,
+                       entered_wave_min=entered_wave_min,
+                       entered_wave_max=entered_wave_max)
         inst.add_new_heat_details()
 
     def slot_pb_addheat_surfers_clicked(self):
