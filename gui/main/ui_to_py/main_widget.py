@@ -92,7 +92,6 @@ class MainWidget(QMainWindow, Ui_Form):
         # Slots for Add Heat Results Tab
         self.cb_addresults_year.currentIndexChanged.connect(self.slot_cb_addresults_year_on_index_change)
         self.cb_addresults_tour.currentIndexChanged.connect(self.slot_cb_addresults_tour_on_index_change)
-        self.cb_addresults_event.currentIndexChanged.connect(self.slot_cb_addresults_round_on_index_change)
         self.cb_addresults_round.currentIndexChanged.connect(self.slot_cb_addresults_heat_on_index_change)
         self.cb_addresults_heat.currentIndexChanged.connect(self.slot_cb_addresults_surfer_on_index_change)
 
@@ -380,9 +379,6 @@ class MainWidget(QMainWindow, Ui_Form):
         return_event_name_inst = TourLists(entered_tour_name=self.cb_addresults_tour.currentText())
         self.cb_addresults_event.addItems([''] + return_event_name_inst.return_event_name_from_tour_name())
 
-    def slot_cb_addresults_round_on_index_change(self):
-        pass
-
     def slot_cb_addresults_heat_on_index_change(self):
         self.cb_addresults_heat.clear()
         return_heat_nbr_inst = TourLists(entered_tour_name=self.cb_addresults_tour.currentText(),
@@ -399,7 +395,31 @@ class MainWidget(QMainWindow, Ui_Form):
         self.cb_addresults_surfer.addItems([''] + return_surfers_in_heat_inst.return_surfers_from_heat())
 
     def slot_pb_addresults_clear_clicked(self):
-        pass
+        self.cb_addresults_surfer.clear()
+        self.line_addresults_picks.clear()
+        self.check_addresults_jersey_yellow.setChecked(0)
+        self.check_addresults_jersey_red.setChecked(0)
+        self.check_addresults_jersey_black.setChecked(0)
+        self.check_addresults_jersey_white.setChecked(0)
+        self.check_addresults_jersey_blue.setChecked(0)
+        self.check_addresults_jersey_pink.setChecked(0)
+        self.check_addresults_advanced.setChecked(0)
+        self.check_addresults_eliminated.setChecked(0)
+        self.line_addresults_1.clear()
+        self.line_addresults_2.clear()
+        self.line_addresults_3.clear()
+        self.line_addresults_4.clear()
+        self.line_addresults_5.clear()
+        self.line_addresults_6.clear()
+        self.line_addresults_7.clear()
+        self.line_addresults_8.clear()
+        self.line_addresults_9.clear()
+        self.line_addresults_10.clear()
+        self.line_addresults_11.clear()
+        self.line_addresults_12.clear()
+        self.line_addresults_13.clear()
+        self.line_addresults_14.clear()
+        self.line_addresults_15.clear()
 
     def slot_pb_addresults_submit_clicked(self):
         pass
