@@ -89,16 +89,16 @@ class MainWidget(QMainWindow, Ui_Form):
         self.pb_addheat_submit.clicked.connect(self.slot_pb_addheat_submit_clicked)
         self.pb_addheat_surfers.clicked.connect(self.slot_pb_addheat_surfers_clicked)
 
-        # # Slots for Add Heat Results Tab
-        # self.cb_addresults_year.currentIndexChanged.connect(self.slot_cb_addresults_year_on_index_change)
-        # self.cb_addresults_tour.currentIndexChanged.connect(self.slot_cb_addresults_tour_on_index_change)
-        # self.cb_addresults_event.currentIndexChanged.connect(self.slot_cb_addresults_round_on_index_change)
-        # self.cb_addresults_round.currentIndexChanged.connect(self.slot_cb_addresults_heat_on_index_change)
-        # self.cb_addresults_heat.currentIndexChanged.connect(self.slot_cb_addresults_surfer_on_index_change)
-        #
-        # self.pb_addresults_clear.clicked.connect(self.slot_pb_addresults_clear_clicked)
-        # self.pb_addresults_submit.clicked.connect(self.slot_pb_addresults_submit_clicked)
-        #
+        # Slots for Add Heat Results Tab
+        self.cb_addresults_year.currentIndexChanged.connect(self.slot_cb_addresults_year_on_index_change)
+        self.cb_addresults_tour.currentIndexChanged.connect(self.slot_cb_addresults_tour_on_index_change)
+        self.cb_addresults_event.currentIndexChanged.connect(self.slot_cb_addresults_round_on_index_change)
+        self.cb_addresults_round.currentIndexChanged.connect(self.slot_cb_addresults_heat_on_index_change)
+        self.cb_addresults_heat.currentIndexChanged.connect(self.slot_cb_addresults_surfer_on_index_change)
+
+        self.pb_addresults_clear.clicked.connect(self.slot_pb_addresults_clear_clicked)
+        self.pb_addresults_submit.clicked.connect(self.slot_pb_addresults_submit_clicked)
+
         # Slots for Add Break Tab
         self.cb_addbreak_continent.currentIndexChanged.connect(self.slot_cb_addbreak_continent_on_index_change)
         self.cb_addbreak_country.currentIndexChanged.connect(self.slot_cb_addbreak_country_on_index_change)
@@ -128,6 +128,7 @@ class MainWidget(QMainWindow, Ui_Form):
         self.cb_addheat_round.addItems([''] + TourLists.return_all_rounds())
 
         # Add Round Results Tab
+        
 
         # Add Tour Years
 
@@ -368,10 +369,30 @@ class MainWidget(QMainWindow, Ui_Form):
     ####################################################################################################################
     # Add Results Tab
 
+    def slot_cb_addresults_year_on_index_change(self):
+        pass
+
+    def slot_cb_addresults_tour_on_index_change(self):
+        pass
+
+    def slot_cb_addresults_round_on_index_change(self):
+        pass
+
+    def slot_cb_addresults_heat_on_index_change(self):
+        pass
+
+    def slot_cb_addresults_surfer_on_index_change(self):
+        pass
+
+    def slot_pb_addresults_clear_clicked(self):
+        pass
+
+    def slot_pb_addresults_submit_clicked(self):
+        pass
+
     ####################################################################################################################
     #  Add Break Tab
 
-    # Change Country List when a Continent is selected
     def slot_cb_addbreak_continent_on_index_change(self):
         self.cb_addbreak_country.clear()
         return_country_inst = LocationLists(entered_continent=self.cb_addbreak_continent.currentText())
