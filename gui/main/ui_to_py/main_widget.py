@@ -355,8 +355,16 @@ class MainWidget(QMainWindow, Ui_Form):
                               prev_selected_heat=prev_selected_heat)
 
         if dialog.exec() == QDialog.Accepted:
-            entered_name=dialog.cb_surfer.text()
+            entered_surfer = dialog.cb_surfer.currentText()
 
+            # Add new surfer to a heat
+            inst = AddTour(entered_tour_name=dialog.prev_selected_tour,
+                           entered_event_name=dialog.prev_selected_event,
+                           entered_round=dialog.prev_selected_round,
+                           entered_heat_nbr=dialog.prev_selected_heat,
+                           entered_surfer=entered_surfer
+                           )
+            inst.add_new_surfers_to_heat()
     ####################################################################################################################
     # Add Results Tab
 

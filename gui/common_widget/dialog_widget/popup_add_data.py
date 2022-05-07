@@ -371,14 +371,6 @@ class SurferToHeat(QDialog):
         self.cb_surfer.addItems([''] + SurferLists.return_all_surfers())
         self.layout.addLayout(self.hlayout_surfer)
 
-        # Add Button To Submit Data to Table
-        self.add_surfer = PyQt5.QtWidgets.QPushButton("Add to Round")
-        self.add_surfer.setFixedWidth(200)
-        self.add_surfer.setFixedHeight(50)
-        self.add_surfer.setDefault(True)
-        # self.add_surfer.clicked.connect(lambda: self.whichbtn(self.b4))
-        self.layout.addWidget(self.add_surfer)
-
         q_btn = QDialogButtonBox.Ok | QDialogButtonBox.Cancel
         self.ButtonBox = QDialogButtonBox(q_btn)
         self.ButtonBox.accepted.connect(self.accept)
