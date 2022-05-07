@@ -1534,21 +1534,24 @@ class LocationLists:
 
         return break_name_list
 
+
 # 7.0 - Return Tours
 class TourLists:
     def __init__(self,
-                 entered_year: Optional[int] = None):
+                 entered_year: Optional[int] = None,
+                 entered_tour_name: Optional[str] = None):
 
         self.entered_year: Optional[int] = entered_year
+        self.entered_tour_name: Optional[str] = entered_tour_name
 
     @staticmethod
     def return_tour_years():
         session = Session()
 
         query = session.query(Tour.year) \
-            .distinct() \
-            .order_by(Tour.year) \
-            .all()
+                       .distinct() \
+                       .order_by(Tour.year) \
+                       .all()
 
         year_list = []
         for year in query:
@@ -1571,7 +1574,30 @@ class TourLists:
 
     @staticmethod
     def return_all_rounds():
-        pass
+        session = Session()
+
+        query = session.query(Round.round) \
+                       .order_by(Round.round) \
+                       .all()
+
+        round_list = []
+        for round in query:
+            round_list.append(round[0])
+
+        return round_list
+
+    # def return_event_name_from_tour_name(self):
+    #     session = Session()
+    #
+    #     query = session.query(Event.event_name) \
+    #                    .join(Tour, Tour.event_id == Event.event_id) \
+    #                    .where(and_(Tour.tour_name == self.entered_tour_name))
+    #
+    #     event_name_list = []
+    #     for event_name in query:
+    #         event_name_list.append(event_name[0])
+    #
+    #     return event_name_list
 
 ########################################################################################################################
 # 6.0 - Testing

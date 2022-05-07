@@ -123,9 +123,9 @@ class MainWidget(QMainWindow, Ui_Form):
         self.cb_addevent_continent.addItems([''] + LocationLists.return_continents())
         self.cb_addevent_year.addItems([''] + TourLists.return_tour_years())
 
-        # Add Heat Tab
-        # self.cb_addheat_year.addItems([''] + TourLists.return_tour_years())
-        # self.cb_addheat_round.addItems([''] + TourLists.return_all_rounds())
+        # # Add Heat Tab
+        self.cb_addheat_year.addItems([''] + TourLists.return_tour_years())
+        self.cb_addheat_round.addItems([''] + TourLists.return_all_rounds())
 
         # Add Round Results Tab
 
@@ -243,20 +243,26 @@ class MainWidget(QMainWindow, Ui_Form):
     # Add Heat Tab
 
     def slot_cb_addheat_year_on_index_change(self):
-        pass
+        self.cb_addheat_tour.clear()
+        return_tour_name_inst = TourLists(entered_year=self.cb_addheat_year.currentText())
+        self.cb_addheat_tour.addItems([''] + return_tour_name_inst.return_tour_name_from_year())
 
     def slot_cb_addheat_tour_on_index_change(self):
         pass
+        # self.cb_addheat_event()
+        # return_event_name_inst = TourLists(entered_tour_name=self.cb_addheat_tour.currentText())
+        # self.cb_addheat_event.addItems([''] + return_event_name_inst.return_event_name_from_tour_name())
 
     def slot_pb_addheat_newround_clicked(self):
-        dialog = AddRoundType(title="Add a Tour Type to database.")
-
-        if dialog.exec() == QDialog.Accepted:
-            entered_round = dialog.line_round.text()
-
-            new_round = AddTour(entered_round=entered_round)
-
-            new_round.add_new_round()
+        pass
+    #     dialog = AddRoundType(title="Add a Tour Type to database.")
+    #
+    #     if dialog.exec() == QDialog.Accepted:
+    #         entered_round = dialog.line_round.text()
+    #
+    #         new_round = AddTour(entered_round=entered_round)
+    #
+    #         new_round.add_new_round()
 
     def slot_pb_addheat_clear_clicked(self):
         pass
