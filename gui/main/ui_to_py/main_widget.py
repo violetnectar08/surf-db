@@ -252,7 +252,6 @@ class MainWidget(QMainWindow, Ui_Form):
         return_event_name_inst = TourLists(entered_tour_name=self.cb_addheat_tour.currentText())
         self.cb_addheat_event.addItems([''] + return_event_name_inst.return_event_name_from_tour_name())
 
-    @staticmethod
     def slot_pb_addheat_newround_clicked(self):
         dialog = AddRoundType(title="Add a Tour Type to database.")
 
@@ -262,6 +261,10 @@ class MainWidget(QMainWindow, Ui_Form):
             new_round = AddTour(entered_round=entered_round)
 
             new_round.add_new_round()
+
+        self.cb_addheat_round.clear()
+        self.cb_addheat_round.addItems([''] + TourLists.return_all_rounds())
+
 
     def slot_pb_addheat_clear_clicked(self):
         self.cb_addheat_year.clear()
