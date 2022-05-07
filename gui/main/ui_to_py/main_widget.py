@@ -55,7 +55,7 @@ class MainWidget(QMainWindow, Ui_Form):
 
     # Check for float
     def check_for_int(self,
-                      check_string_for_int: str) -> float:
+                      check_string_for_int: str) -> int:
 
         okay_characters = "0123456789."
         if all([char in okay_characters for char in check_string_for_int]):
@@ -67,6 +67,20 @@ class MainWidget(QMainWindow, Ui_Form):
                                f"\nEntered Value: {check_string_for_int}")
             print(int_not_entered)
             raise ValueError()
+
+    # Check for Valid Score (Float and 10 or less)
+    def check_for_valid_score(self,
+                              check_string_for_valid_score: str) -> float:
+        entered_score = self.check_for_float(check_string_for_float=check_string_for_valid_score)
+        if entered_score > 10.00 or entered_score < 0.00:
+            invalid_score_entered = (f"\n"
+                                     f"\n{self.div_dict['wipe_out_wav'][0]:{self.div_dict['wipe_out_wav'][1]}^{self.div_dict['wipe_out_wav'][2]}}"
+                                     f"\nScores must be between 0 and 10."
+                                     f"\nEntered Score: {entered_score}")
+            print(invalid_score_entered)
+            raise ValueError()
+        else:
+            return entered_score
 
     # This defines the event handlers for everything on the Main Widget
     def connect_slots(self):
@@ -470,77 +484,77 @@ class MainWidget(QMainWindow, Ui_Form):
         entered_wave_1 = self.line_addresults_1.text() if not \
             self.line_addresults_1.text() == "" else None
         if entered_wave_1 is not None:
-            entered_wave_1 = self.check_for_float(check_string_for_float=entered_wave_1)
+            entered_wave_1 = self.check_for_valid_score(check_string_for_valid_score=entered_wave_1)
 
         entered_wave_2 = self.line_addresults_2.text() if not \
             self.line_addresults_2.text() == "" else None
         if entered_wave_2 is not None:
-            entered_wave_2 = self.check_for_float(check_string_for_float=entered_wave_2)
+            entered_wave_2 = self.check_for_valid_score(check_string_for_valid_score=entered_wave_2)
 
         entered_wave_3 = self.line_addresults_3.text() if not \
             self.line_addresults_3.text() == "" else None
         if entered_wave_3 is not None:
-            entered_wave_3 = self.check_for_float(check_string_for_float=entered_wave_3)
+            entered_wave_3 = self.check_for_valid_score(check_string_for_valid_score=entered_wave_3)
 
         entered_wave_4 = self.line_addresults_4.text() if not \
             self.line_addresults_4.text() == "" else None
         if entered_wave_4 is not None:
-            entered_wave_4 = self.check_for_float(check_string_for_float=entered_wave_4)
+            entered_wave_4 = self.check_for_valid_score(check_string_for_valid_score=entered_wave_4)
 
         entered_wave_5 = self.line_addresults_5.text() if not \
             self.line_addresults_5.text() == "" else None
         if entered_wave_5 is not None:
-            entered_wave_5 = self.check_for_float(check_string_for_float=entered_wave_5)
+            entered_wave_5 = self.check_for_valid_score(check_string_for_valid_score=entered_wave_5)
 
         entered_wave_6 = self.line_addresults_6.text() if not \
             self.line_addresults_6.text() == "" else None
         if entered_wave_6 is not None:
-            entered_wave_6 = self.check_for_float(check_string_for_float=entered_wave_6)
+            entered_wave_6 = self.check_for_valid_score(check_string_for_valid_score=entered_wave_6)
 
         entered_wave_7 = self.line_addresults_7.text() if not \
             self.line_addresults_7.text() == "" else None
         if entered_wave_7 is not None:
-            entered_wave_7 = self.check_for_float(check_string_for_float=entered_wave_7)
+            entered_wave_7 = self.check_for_valid_score(check_string_for_valid_score=entered_wave_7)
 
         entered_wave_8 = self.line_addresults_8.text() if not \
             self.line_addresults_8.text() == "" else None
         if entered_wave_8 is not None:
-            entered_wave_8 = self.check_for_float(check_string_for_float=entered_wave_8)
+            entered_wave_8 = self.check_for_valid_score(check_string_for_valid_score=entered_wave_8)
 
         entered_wave_9 = self.line_addresults_9.text() if not \
             self.line_addresults_9.text() == "" else None
         if entered_wave_9 is not None:
-            entered_wave_9 = self.check_for_float(check_string_for_float=entered_wave_9)
+            entered_wave_9 = self.check_for_valid_score(check_string_for_valid_score=entered_wave_9)
 
         entered_wave_10 = self.line_addresults_10.text() if not \
             self.line_addresults_10.text() == "" else None
         if entered_wave_10 is not None:
-            entered_wave_10 = self.check_for_float(check_string_for_float=entered_wave_10)
+            entered_wave_10 = self.check_for_valid_score(check_string_for_valid_score=entered_wave_10)
 
         entered_wave_11 = self.line_addresults_11.text() if not \
             self.line_addresults_11.text() == "" else None
         if entered_wave_11 is not None:
-            entered_wave_11 = self.check_for_float(check_string_for_float=entered_wave_11)
+            entered_wave_11 = self.check_for_valid_score(check_string_for_valid_score=entered_wave_11)
 
         entered_wave_12 = self.line_addresults_12.text() if not \
             self.line_addresults_12.text() == "" else None
         if entered_wave_12 is not None:
-            entered_wave_12 = self.check_for_float(check_string_for_float=entered_wave_12)
+            entered_wave_12 = self.check_for_valid_score(check_string_for_valid_score=entered_wave_12)
 
         entered_wave_13 = self.line_addresults_13.text() if not \
             self.line_addresults_13.text() == "" else None
         if entered_wave_13 is not None:
-            entered_wave_13 = self.check_for_float(check_string_for_float=entered_wave_13)
+            entered_wave_13 = self.check_for_valid_score(check_string_for_valid_score=entered_wave_13)
 
         entered_wave_14 = self.line_addresults_14.text() if not \
             self.line_addresults_14.text() == "" else None
         if entered_wave_14 is not None:
-            entered_wave_14 = self.check_for_float(check_string_for_float=entered_wave_14)
+            entered_wave_14 = self.check_for_valid_score(check_string_for_valid_score=entered_wave_14)
 
         entered_wave_15 = self.line_addresults_15.text() if not \
             self.line_addresults_15.text() == "" else None
         if entered_wave_15 is not None:
-            entered_wave_15 = self.check_for_float(check_string_for_float=entered_wave_15)
+            entered_wave_15 = self.check_for_valid_score(check_string_for_valid_score=entered_wave_15)
 
         # Add New Heat Results
         inst = AddTour(entered_tour_name=entered_tour_name,
