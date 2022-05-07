@@ -1586,18 +1586,18 @@ class TourLists:
 
         return round_list
 
-    # def return_event_name_from_tour_name(self):
-    #     session = Session()
-    #
-    #     query = session.query(Event.event_name) \
-    #                    .join(Tour, Tour.event_id == Event.event_id) \
-    #                    .where(and_(Tour.tour_name == self.entered_tour_name))
-    #
-    #     event_name_list = []
-    #     for event_name in query:
-    #         event_name_list.append(event_name[0])
-    #
-    #     return event_name_list
+    def return_event_name_from_tour_name(self):
+        session = Session()
+
+        query = session.query(Event.event_name) \
+                       .join(Tour, Tour.tour_id == Event.tour_id) \
+                       .where(and_(Tour.tour_name == self.entered_tour_name))
+
+        event_name_list = []
+        for event_name in query:
+            event_name_list.append(event_name[0])
+
+        return event_name_list
 
 ########################################################################################################################
 # 6.0 - Testing

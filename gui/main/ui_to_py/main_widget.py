@@ -248,10 +248,9 @@ class MainWidget(QMainWindow, Ui_Form):
         self.cb_addheat_tour.addItems([''] + return_tour_name_inst.return_tour_name_from_year())
 
     def slot_cb_addheat_tour_on_index_change(self):
-        pass
-        # self.cb_addheat_event()
-        # return_event_name_inst = TourLists(entered_tour_name=self.cb_addheat_tour.currentText())
-        # self.cb_addheat_event.addItems([''] + return_event_name_inst.return_event_name_from_tour_name())
+        self.cb_addheat_event.clear()
+        return_event_name_inst = TourLists(entered_tour_name=self.cb_addheat_tour.currentText())
+        self.cb_addheat_event.addItems([''] + return_event_name_inst.return_event_name_from_tour_name())
 
     def slot_pb_addheat_newround_clicked(self):
         pass
