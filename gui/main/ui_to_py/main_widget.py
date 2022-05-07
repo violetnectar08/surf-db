@@ -253,7 +253,6 @@ class MainWidget(QMainWindow, Ui_Form):
         self.cb_addheat_event.addItems([''] + return_event_name_inst.return_event_name_from_tour_name())
 
     def slot_pb_addheat_newround_clicked(self):
-        pass
         dialog = AddRoundType(title="Add a Tour Type to database.")
 
         if dialog.exec() == QDialog.Accepted:
@@ -264,7 +263,22 @@ class MainWidget(QMainWindow, Ui_Form):
             new_round.add_new_round()
 
     def slot_pb_addheat_clear_clicked(self):
-        pass
+        self.cb_addheat_year.clear()
+        self.cb_addheat_year.addItems([''] + TourLists.return_tour_years())
+        self.cb_addheat_round.clear()
+        self.cb_addheat_round.addItems([''] + TourLists.return_all_rounds())
+        self.cb_addheat_event.clear()
+        self.line_addheat_heat.clear()
+        self.check_addheat_storm.setChecked(0)
+        self.check_addheat_light.setChecked(0)
+        self.check_addheat_calm.setChecked(0)
+        self.check_addheat_cross.setChecked(0)
+        self.check_addheat_onshore.setChecked(0)
+        self.check_addheat_offshore.setChecked(0)
+        self.line_addheat_duration.clear()
+        self.line_addheat_date.clear()
+        self.line_addheat_wavemin.clear()
+        self.line_addheat_wavemax.clear()
 
     def slot_pb_addheat_submit_clicked(self):
         pass
