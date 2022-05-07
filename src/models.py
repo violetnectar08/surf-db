@@ -1539,10 +1539,16 @@ class LocationLists:
 class TourLists:
     def __init__(self,
                  entered_year: Optional[int] = None,
-                 entered_tour_name: Optional[str] = None):
+                 entered_tour_name: Optional[str] = None,
+                 entered_round: Optional[str] = None,
+                 entered_event_name: Optional[str] = None,
+                 entered_heat_nbr: Optional[str] = None):
 
         self.entered_year: Optional[int] = entered_year
         self.entered_tour_name: Optional[str] = entered_tour_name
+        self.entered_round: Optional[str] = entered_round
+        self.entered_event_name: Optional[str] = entered_event_name
+        self.entered_heat_nbr: Optional[str] = entered_heat_nbr
 
     @staticmethod
     def return_tour_years():
@@ -1591,7 +1597,8 @@ class TourLists:
 
         query = session.query(Event.event_name) \
                        .join(Tour, Tour.tour_id == Event.tour_id) \
-                       .where(and_(Tour.tour_name == self.entered_tour_name))
+                       .where(and_(Tour.tour_name == self.entered_tour_name)) \
+                       .order_by(Event.stop_nbr)
 
         event_name_list = []
         for event_name in query:
@@ -1599,6 +1606,44 @@ class TourLists:
 
         return event_name_list
 
+    def return_heat_nbr_from_event_and_round(self):
+        session = Session()
+
+        query = session.query(HeatDetails.heat_nbr) \
+                       .join(Event, Event.event_id == HeatDetails.event_id) \
+                       .join(Round, Round.round_id == HeatDetails.round_id) \
+                       .join(Tour, Tour.tour_id == Event.tour_id) \
+                       .where(and_(Tour.tour_name == self.entered_tour_name,
+                                   Event.event_name == self.entered_event_name,
+                                   Round.round == self.entered_round)) \
+                       .order_by(HeatDetails.heat_nbr)
+
+        heat_nbr_list = []
+        for heat_nbr in query:
+            heat_nbr_list.append(heat_nbr[0])
+
+        return heat_nbr_list
+
+    def return_surfers_from_heat(self):
+        session = Session()
+
+        query = session.query(Surfers.full_name) \
+                       .join(HeatSurfers, HeatSurfers.surfer_id == Surfers.surfer_id) \
+                       .join(HeatDetails, HeatDetails.heat_id == HeatSurfers.heat_id) \
+                       .join(Round, Round.round_id == HeatDetails.round_id) \
+                       .join(Event, Event.event_id == HeatDetails.event_id) \
+                       .join(Tour, Tour.tour_id == Event.tour_id) \
+                       .where(and_(Tour.tour_name == self.entered_tour_name,
+                                   Event.event_name == self.entered_event_name,
+                                   Round.round == self.entered_round,
+                                   HeatDetails.heat_nbr == self.entered_heat_nbr)) \
+                       .order_by(Surfers.full_name)
+
+        surfer_in_heat_list = []
+        for full_name in query:
+            surfer_in_heat_list.append(full_name[0])
+
+        return surfer_in_heat_list
 
 # 8.0 - Return Tours
 class SurferLists:

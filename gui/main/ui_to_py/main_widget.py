@@ -371,19 +371,32 @@ class MainWidget(QMainWindow, Ui_Form):
     # Add Results Tab
 
     def slot_cb_addresults_year_on_index_change(self):
-        pass
+        self.cb_addresults_tour.clear()
+        return_tour_name_inst = TourLists(entered_year=self.cb_addresults_year.currentText())
+        self.cb_addresults_tour.addItems([''] + return_tour_name_inst.return_tour_name_from_year())
 
     def slot_cb_addresults_tour_on_index_change(self):
-        pass
+        self.cb_addresults_event.clear()
+        return_event_name_inst = TourLists(entered_tour_name=self.cb_addresults_tour.currentText())
+        self.cb_addresults_event.addItems([''] + return_event_name_inst.return_event_name_from_tour_name())
 
     def slot_cb_addresults_round_on_index_change(self):
         pass
 
     def slot_cb_addresults_heat_on_index_change(self):
-        pass
+        self.cb_addresults_heat.clear()
+        return_heat_nbr_inst = TourLists(entered_tour_name=self.cb_addresults_tour.currentText(),
+                                         entered_event_name=self.cb_addresults_event.currentText(),
+                                         entered_round=self.cb_addresults_round.currentText())
+        self.cb_addresults_heat.addItems([''] + return_heat_nbr_inst.return_heat_nbr_from_event_and_round())
 
     def slot_cb_addresults_surfer_on_index_change(self):
-        pass
+        self.cb_addresults_surfer.clear()
+        return_surfers_in_heat_inst = TourLists(entered_tour_name=self.cb_addresults_tour.currentText(),
+                                                entered_event_name=self.cb_addresults_event.currentText(),
+                                                entered_round=self.cb_addresults_round.currentText(),
+                                                entered_heat_nbr=self.cb_addresults_heat.currentText())
+        self.cb_addresults_surfer.addItems([''] + return_surfers_in_heat_inst.return_surfers_from_heat())
 
     def slot_pb_addresults_clear_clicked(self):
         pass
