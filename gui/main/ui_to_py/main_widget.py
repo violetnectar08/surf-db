@@ -359,7 +359,6 @@ class MainWidget(QMainWindow, Ui_Form):
                        entered_wave_max=entered_wave_max)
         inst.add_new_heat_details()
 
-        self.line_addheat_heat.clear()
         self.check_addheat_storm.setChecked(0)
         self.check_addheat_light.setChecked(0)
         self.check_addheat_calm.setChecked(0)
