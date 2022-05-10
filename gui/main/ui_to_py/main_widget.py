@@ -209,6 +209,10 @@ class MainWidget(QMainWindow, Ui_Form):
                            entered_tour_type=entered_tour_type)
             inst.add_new_tour()
 
+            self.cb_addevent_continent.addItems([''] + LocationLists.return_continents())
+            self.cb_addevent_year.addItems([''] + TourLists.return_tour_years())
+            self.slot_cb_addevent_year_on_index_change()
+
     def slot_pb_addevent_clear_clicked(self):
         self.cb_addevent_year.clear()
         self.cb_addevent_year.addItems([''] + TourLists.return_tour_years())
@@ -254,6 +258,8 @@ class MainWidget(QMainWindow, Ui_Form):
 
         self.slot_pb_addevent_clear_clicked()
 
+        self.slot_cb_addheat_tour_on_index_change()
+
     ####################################################################################################################
     # Add Heat Tab
 
@@ -278,6 +284,7 @@ class MainWidget(QMainWindow, Ui_Form):
             new_round.add_new_round()
 
         self.cb_addheat_round.clear()
+        self.cb_addheat_round.addItems([''] + TourLists.return_all_rounds())
         self.cb_addheat_round.addItems([''] + TourLists.return_all_rounds())
 
     def slot_pb_addheat_clear_clicked(self):
@@ -352,7 +359,18 @@ class MainWidget(QMainWindow, Ui_Form):
                        entered_wave_max=entered_wave_max)
         inst.add_new_heat_details()
 
-        self.slot_pb_addheat_clear_clicked()
+        self.check_addheat_storm.setChecked(0)
+        self.check_addheat_light.setChecked(0)
+        self.check_addheat_calm.setChecked(0)
+        self.check_addheat_cross.setChecked(0)
+        self.check_addheat_onshore.setChecked(0)
+        self.check_addheat_offshore.setChecked(0)
+        self.line_addheat_duration.clear()
+        self.line_addheat_date.clear()
+        self.line_addheat_wavemin.clear()
+        self.line_addheat_wavemax.clear()
+
+        self.slot_cb_addresults_heat_on_index_change()
 
     def slot_pb_addheat_surfers_clicked(self):
 
