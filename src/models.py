@@ -1650,7 +1650,7 @@ class TourLists:
         return surfer_in_heat_list
 
 
-# 8.0 - Return Tours
+# 8.0 - Return Surfers
 class SurferLists:
     def __init__(self,
                  entered_full_name: Optional[str] = None,
@@ -1664,6 +1664,7 @@ class SurferLists:
     @staticmethod
     def return_all_surfers():
         session = Session()
+
 
         query = session.query(Surfers.full_name) \
                        .distinct() \
