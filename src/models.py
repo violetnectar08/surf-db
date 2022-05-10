@@ -1469,7 +1469,8 @@ class LocationLists:
 
         query = session.query(Country.country)\
                        .join(Continent)\
-                       .filter(Continent.continent == {self.entered_continent})
+                       .filter(Continent.continent == {self.entered_continent}) \
+                       .order_by(Country.country)
 
         country_list = []
         for country in query:
@@ -1486,7 +1487,8 @@ class LocationLists:
                        .join(Country)\
                        .join(Continent)\
                        .filter(Continent.continent == {self.entered_continent},
-                               Country.country == {self.entered_country})
+                               Country.country == {self.entered_country}) \
+                       .order_by(Region.region)
 
         region_list = []
         for region in query:
@@ -1505,7 +1507,8 @@ class LocationLists:
                        .join(Continent)\
                        .filter(Continent.continent == {self.entered_continent},
                                Country.country == {self.entered_country},
-                               Region.region == {self.entered_region})
+                               Region.region == {self.entered_region}) \
+                       .order_by(City.city)
 
         city_list = []
         for city in query:
@@ -1524,7 +1527,8 @@ class LocationLists:
                         .join(Continent)\
                         .filter(Continent.continent == {self.entered_continent},
                                 Country.country == {self.entered_country},
-                                Region.region == {self.entered_region})
+                                Region.region == {self.entered_region}) \
+                        .order_by(Break.break_name)
 
         break_name_list = []
         for break_name in query:
@@ -1644,6 +1648,7 @@ class TourLists:
             surfer_in_heat_list.append(full_name[0])
 
         return surfer_in_heat_list
+
 
 # 8.0 - Return Tours
 class SurferLists:
