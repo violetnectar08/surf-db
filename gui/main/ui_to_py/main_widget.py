@@ -848,7 +848,64 @@ class MainWidget(QMainWindow, Ui_Form):
 
     # New Location Button Clicked
     def slot_pb_addsurfer_newloc_clicked(self):
-        self.slot_pb_addbreak_newloc_clicked()
+        dialog = AddLocationDialog(title="Add a location to the database.",
+                                   prev_selected_continent=self.cb_addsurfer_hcontinent.currentText(),
+                                   prev_selected_country=self.cb_addsurfer_hcountry.currentText(),
+                                   prev_selected_region=self.cb_addsurfer_hregion.currentText(),
+                                   )
+
+        if dialog.exec() == QDialog.Rejected:
+            dialog.close()
+
+        if dialog.exec() == QDialog.Accepted:
+            continent = dialog.cb_continent.currentText()
+
+            entered_continent = dialog.cb_continent.currentText()
+
+            # If country was entered into line edit use that value. Else use combobox.
+            entered_country = None
+            country_in_line_edit = dialog.line_country.text() is None or dialog.line_country.text() == ''
+            country_in_combobox = dialog.cb_country.currentText() is None or dialog.cb_country.currentText() == ''
+            if not country_in_line_edit:
+                entered_country = dialog.line_country.text()
+                add_country_inst = AddLocation(entered_continent=entered_continent,
+                                               entered_country=entered_country)
+                add_country_inst.add_new_country()
+            elif country_in_combobox:
+                print(f"\nSelect or enter a country.\n")
+            else:
+                entered_country = dialog.cb_country.currentText()
+
+            # If region was entered into line edit use that value. Else use combobox.
+            entered_region = None
+            region_in_line_edit = dialog.line_region.text() is None or dialog.line_region.text() == ''
+            region_in_combobox = dialog.cb_region.currentText() is None or dialog.cb_region.currentText() == ''
+            if not region_in_line_edit:
+                entered_region = dialog.line_region.text()
+                add_region_inst = AddLocation(entered_continent=entered_continent,
+                                              entered_country=entered_country,
+                                              entered_region=entered_region)
+                add_region_inst.add_new_region()
+            elif region_in_combobox:
+                print(f"\nSelect or enter a region.\n")
+            else:
+                entered_region = dialog.cb_region.currentText()
+
+            # Grab City from line edit
+            if dialog.line_city.text() is None or dialog.line_city == '':
+                print(f"\nEnter a city.\n")
+            else:
+                entered_city = dialog.line_city.text()
+                add_city_inst = AddLocation(entered_continent=entered_continent,
+                                            entered_country=entered_country,
+                                            entered_region=entered_region,
+                                            entered_city=entered_city)
+                add_city_inst.add_new_city()
+            dialog.close()
+
+            self.slot_cb_addsurfer_hcontinent_on_index_change()
+            self.slot_cb_addsurfer_hcountry_on_index_change()
+            self.slot_cb_addsurfer_hregion_on_index_change()
     
     # Submit Button Clicked
     def slot_pb_addsurfer_submit_clicked(self):
