@@ -78,6 +78,26 @@ join wsl.country country
 		on country.country_id = region.country_id
 ;
 
+
+-- heat details
+select 	tour.tour_name,
+		event.event_name,
+        round.round,
+        heat_details.heat_nbr,
+		heat_details.wind,
+        heat_details.heat_date,
+        heat_details.duration,
+        heat_details.wave_min,
+        heat_details.wave_max
+from wsl.heat_details heat_details
+join wsl.event event
+		on event.event_id = heat_details.event_id
+join wsl.round round
+		on round.round_id = heat_details.round_id
+join wsl.tour tour
+		on tour.tour_id = event.tour_id
+;
+
 -- surfers in heats
 select 	tour.tour_name,
 		event.event_name,
@@ -135,4 +155,23 @@ join wsl.round round
 		on round.round_id = heat_details.round_id
 join wsl.tour tour
 		on tour.tour_id = event.event_id
+;
+
+-- Count surfers in rounds
+select tour.tour_name,
+		event.event_name,
+        round.round,
+        count(distinct heat_surfers.surfer_id) as nbr_of_surfers
+from wsl.heat_surfers heat_surfers
+join wsl.surfers surfers
+		on surfers.surfer_id = heat_surfers.surfer_id
+join wsl.heat_details heat_details
+		on heat_details.heat_id = heat_surfers.heat_id
+join wsl.event event
+		on event.event_id = heat_details.event_id
+join wsl.round round
+		on round.round_id = heat_details.round_id
+join wsl.tour tour
+		on tour.tour_id = event.event_id
+group by tour_name, event_name, round
 ;
