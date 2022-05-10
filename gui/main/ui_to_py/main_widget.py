@@ -42,7 +42,7 @@ class MainWidget(QMainWindow, Ui_Form):
     def check_for_float(self,
                         check_string_for_float: str) -> float:
 
-        okay_characters = "0123456789."
+        okay_characters = "0123456789.-"
         if all([char in okay_characters for char in check_string_for_float]):
             return float(check_string_for_float)
         else:
@@ -72,7 +72,7 @@ class MainWidget(QMainWindow, Ui_Form):
     def check_for_valid_score(self,
                               check_string_for_valid_score: str) -> float:
         entered_score = self.check_for_float(check_string_for_float=check_string_for_valid_score)
-        if entered_score > 10.00 or entered_score < 0.00:
+        if entered_score > 10.00:
             invalid_score_entered = (f"\n"
                                      f"\n{self.div_dict['wipe_out_wav'][0]:{self.div_dict['wipe_out_wav'][1]}^{self.div_dict['wipe_out_wav'][2]}}"
                                      f"\nScores must be between 0 and 10."
