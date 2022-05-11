@@ -154,7 +154,7 @@ join wsl.event event
 join wsl.round round
 		on round.round_id = heat_details.round_id
 join wsl.tour tour
-		on tour.tour_id = event.event_id
+		on tour.tour_id = event.tour_id
 ;
 
 -- Count surfers in rounds
@@ -172,7 +172,7 @@ join wsl.event event
 join wsl.round round
 		on round.round_id = heat_details.round_id
 join wsl.tour tour
-		on tour.tour_id = event.event_id
+		on tour.tour_id = event.tour_id
 group by tour_name, event_name, round
 ;
 
@@ -198,7 +198,7 @@ join wsl.event event
 join wsl.round round
 		on round.round_id = heat_details.round_id
 join wsl.tour tour
-		on tour.tour_id = event.event_id
+		on tour.tour_id = event.tour_id
 where tour_name = '2022 Mens Championship Tour'
 and event_name = 'Billabong Pro Pipe'
 and round = 'Final'
