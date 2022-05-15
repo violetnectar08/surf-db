@@ -677,6 +677,9 @@ class MainWidget(QMainWindow, Ui_Form):
                 add_city_inst.add_new_city()
             dialog.close()
 
+            self.slot_cb_addbreak_continent_on_index_change()
+            self.slot_cb_addbreak_country_on_index_change()
+
     # Clear the form when the Clear button is checked
     def slot_pb_addbreak_clear_clicked(self):
         self.cb_addbreak_continent.clear()

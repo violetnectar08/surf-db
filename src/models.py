@@ -381,7 +381,7 @@ class AddLocation:
                               f"\nEntered Country: {self.entered_country}"
                               f"\nEntered Region: {self.entered_region}"
                               f"\nEntered City: {self.entered_city}")
-            raise ValueError(no_entry_error)
+            return no_entry_error
 
     def was_break_name_entered(self):
         session = Session()
@@ -451,7 +451,7 @@ class AddLocation:
         self.was_country_entered()
 
         # If a valid country was entered and does not already exist add it to wsl.country
-        self.add_new_country
+        self.add_new_country()
 
         # Was a region entered?
         self.was_region_entered()
@@ -506,7 +506,7 @@ class AddLocation:
         self.was_country_entered()
 
         # If a valid country was entered and does not already exist add it to wsl.country
-        self.add_new_country
+        self.add_new_country()
 
         # Was a region entered?
         self.was_region_entered()
