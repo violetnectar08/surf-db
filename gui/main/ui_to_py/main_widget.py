@@ -796,6 +796,8 @@ class MainWidget(QMainWindow, Ui_Form):
 
         # Clear Form on Submit
         self.slot_pb_addbreak_clear_clicked()
+        self.cb_addevent_continent.clear()
+        self.cb_addevent_continent.addItems([''] + LocationLists.return_continents())
 
     ####################################################################################################################
     # Add Surfer Tab
