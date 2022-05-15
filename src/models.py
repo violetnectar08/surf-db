@@ -567,7 +567,7 @@ class AddLocation:
         self.was_country_entered()
 
         # If a valid country was entered and does not already exist add it to wsl.country
-        self.add_new_country
+        self.add_new_country()
 
         # Was a region entered?
         self.was_region_entered()
@@ -595,10 +595,15 @@ class AddLocation:
 
         # Did the query return a break? If so it has already been added to wsl.break
         if check_break is not None:
-            print(f"The wave at {self.entered_break_name} in "
-                  f"{self.entered_region}, {self.entered_country} "
-                  f"on the continent of {self.entered_continent} has already been discovered.")
-            return
+            break_exists = f"\n" \
+                           f"~~~~~~~~~~~~~ DUPLICATE LOCATION ~~~~~~~~~~~~~" \
+                           f"The wave at {self.entered_break_name} already exists at the entered location." \
+                           f"Entered Continent: {self.entered_continent}" \
+                           f"Entered Country: {self.entered_country}" \
+                           f"Entered Region: {self.entered_region}" \
+                           f"Entered Break Name: {self.entered_break_name}"
+
+            return break_exists
         else:
             # Get region_id from continent table
             query = (select(Region.region_id)
