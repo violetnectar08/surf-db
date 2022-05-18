@@ -18,7 +18,13 @@ from sqlalchemy.ext.declarative import declarative_base
 conn_str = 'mysql+pymysql://Heather:#LAwaItly19@localhost:3306/wsl'
 
 # 2.2 - SQLAlchemy engine that will interact with mysql database
-engine = create_engine(conn_str, echo=True)
+engine = create_engine(conn_str,
+                       echo=True,
+                       max_overflow=15,
+                       pool_pre_ping=True,
+                       pool_recycle=60*60,
+                       pool_size=30
+                       )
 
 # 2.3 - SQLAlchemy ORM session that binds to the engine
 Session = sessionmaker(bind=engine)
@@ -41,8 +47,6 @@ class Continent(Base):
         return f"Continent(id={self.continent_id!r}, " \
                f"name={self.continent!r})"
 
-    # For direct querying
-    session = Session()
 
 # wsl.country
 class Country(Base):
@@ -368,8 +372,6 @@ class AddLocation:
             raise ValueError(no_entry_error)
 
     def was_city_entered(self):
-        session = Session()
-
         # Check to see if a city was entered
         if self.entered_city is None or self.entered_city == '':
             no_entry_error = (f"\n"
@@ -384,8 +386,6 @@ class AddLocation:
             return no_entry_error
 
     def was_break_name_entered(self):
-        session = Session()
-
         # Check to see if a break name was entered
         if self.entered_break_name is None or self.entered_break_name == '':
             no_entry_error = (f"\n"
@@ -400,8 +400,6 @@ class AddLocation:
             raise ValueError(no_entry_error)
 
     def add_new_country(self):
-        session = Session()
-
         # Was a continent entered?
         self.was_continent_entered()
 
@@ -415,35 +413,41 @@ class AddLocation:
                              Continent.continent == self.entered_continent,
                              Country.country == self.entered_country
                              )))
+
+        session = Session()
         result = session.execute(query)
         check_country = result.scalar()
+        session.close()
 
         # Did the query return a country? If so it has already been added to wsl.country
         if check_country is not None:
             print(f"\nThe country, {self.entered_country} "
                   f"has already been discovered on {self.entered_continent}.\n")
-            # return
+            pass
         else:
             # Add New Country to wsl.country
 
             # Get continent_id from continent table
+            session = Session()
+
             query = (select(Continent.continent_id)
                      .where(Continent.continent == self.entered_continent))
+
             result = session.execute(query)
             entered_continent_id = result.scalar()
+            session.close()
 
             # Create an instance of the Country class to add to wsl.country
             new_country = Country(continent_id=entered_continent_id,
                                   country=self.entered_country)
 
             # Add the new country.
+            session = Session()
             session.add(new_country)
             session.flush()
             session.commit()
 
     def add_new_region(self):
-        session = Session()
-
         # Was a continent entered?
         self.was_continent_entered()
 
@@ -466,8 +470,10 @@ class AddLocation:
                               Region.region == self.entered_region
                             )))
 
+        session = Session()
         result = session.execute(query)
         check_region = result.scalar()
+        session.close()
 
         # Did the query return a region? If so it has already been added to wsl.region.
         if check_region is not None:
@@ -484,21 +490,23 @@ class AddLocation:
                                   Country.country == self.entered_country
                                 )))
 
+            session = Session()
             result = session.execute(query)
-            entered_country_id = result.scalar()\
+            entered_country_id = result.scalar()
+            session.close()
 
             # Create an instance of the Region class to add the new region to wsl.region.
             new_region = Region(country_id=entered_country_id,
                                 region=self.entered_region)
 
             # Add the new region
+            session = Session()
             session.add(new_region)
             session.flush()
             session.commit()
+            session.close()
 
     def add_new_city(self):
-        session = Session()
-
         # Was a continent entered?
         self.was_continent_entered()
 
@@ -529,6 +537,7 @@ class AddLocation:
                   City.city == self.entered_city
                  )))
 
+        session = Session()
         result = session.execute(query)
         check_city = result.scalar()
 
@@ -547,19 +556,22 @@ class AddLocation:
                                  Country.country == self.entered_country,
                                  Continent.continent == self.entered_continent
                                  )))
+
+            session = Session()
             result = session.execute(query)
             entered_region_id = result.scalar()
+            session.close()
 
             new_city = City(region_id=entered_region_id,
                             city=self.entered_city)
 
+            session = Session()
             session.add(new_city)
             session.flush()
             session.commit()
+            session.close()
 
     def add_new_break(self):
-        session = Session()
-
         # Was a continent entered?
         self.was_continent_entered()
 
@@ -590,8 +602,10 @@ class AddLocation:
                               Break.break_name == self.entered_break_name
                             )))
 
+        session = Session()
         result = session.execute(query)
         check_break = result.scalar()
+        session.close()
 
         # Did the query return a break? If so it has already been added to wsl.break
         if check_break is not None:
@@ -614,8 +628,11 @@ class AddLocation:
                       Country.country == self.entered_country,
                       Continent.continent == self.entered_continent
                      )))
+
+            session = Session()
             result = session.execute(query)
             entered_region_id = result.scalar()
+            session.close()
 
             new_break = Break(break_name=self.entered_break_name,
                               region_id=entered_region_id,
@@ -627,9 +644,11 @@ class AddLocation:
                               blown_out=self.entered_blown_out,
                               too_small=self.entered_too_small)
 
+            session = Session()
             session.add(new_break)
             session.flush()
             session.commit()
+            session.close()
 
 
 class AddSurfer:
@@ -728,8 +747,6 @@ class AddSurfer:
             raise ValueError(no_entry_error)
 
     def add_new_surfer(self):
-        session = Session()
-
         # Was gender, first name, and last name entered?
         self.was_gender_entered()
         self.was_first_name_entered()
@@ -759,8 +776,10 @@ class AddSurfer:
                                                 Region.region == self.entered_home_region,
                                                 City.city == self.entered_home_city
                                                 )))
+            session = Session()
             result = session.execute(query)
             check_home_city = result.scalar()
+            session.close()
 
             if check_home_city is None:
                 city_inst = AddLocation(entered_continent=self.entered_home_continent,
@@ -778,8 +797,11 @@ class AddSurfer:
                              Surfers.last_name == self.entered_last_name,
                              Country.country == self.entered_rep_country
                             )))
+
+        session = Session()
         result = session.execute(query)
         check_surfer = result.scalar()
+        session.close()
 
         if check_surfer is not None:
             print(f"{self.entered_first_name} {self.entered_last_name} "
@@ -793,8 +815,11 @@ class AddSurfer:
                             Continent.continent == self.entered_rep_continent,
                             Country.country == self.entered_rep_country
                             )))
+
+        session = Session()
         result = session.execute(query)
         entered_rep_country_id = result.scalar()
+        session.close()
 
         # Get home city id
         query = (select(City.city_id)
@@ -807,8 +832,11 @@ class AddSurfer:
                              Region.region == self.entered_home_region,
                              City.city == self.entered_home_city
                             )))
+
+        session = Session()
         result = session.execute(query)
         entered_home_city_id = result.scalar()
+        session.close()
 
         # Get full name
         entered_full_name = f"{self.entered_first_name} {self.entered_last_name}"
@@ -826,9 +854,11 @@ class AddSurfer:
                              first_tour=self.entered_first_tour,
                              home_city_id=entered_home_city_id)
 
+        session = Session()
         session.add(new_surfer)
         session.flush()
         session.commit()
+        session.close()
 
 
 class AddTour:
@@ -1050,8 +1080,6 @@ class AddTour:
             raise ValueError(no_entry_error)
 
     def add_new_tour(self):
-        session = Session()
-
         # Was the tour year entered?
         self.was_year_entered()
 
@@ -1069,8 +1097,10 @@ class AddTour:
                              Tour.tour_type == self.entered_tour_type
                             )))
 
+        session = Session()
         result = session.execute(query)
         check_tour = result.scalar()
+        session.close()
 
         # Does the entered_country exist in the entered_continent
         if check_tour is not None:
@@ -1084,12 +1114,13 @@ class AddTour:
                         tour_type=self.entered_tour_type,
                         tour_name=entered_tour_name)
 
+        session = Session()
         session.add(new_tour)
         session.flush()
         session.commit()
+        session.close()
 
     def add_new_event(self):
-        session = Session()
 
         # Was the tour and event entered?
         self.was_tour_name_entered()
@@ -1102,16 +1133,22 @@ class AddTour:
         self.was_break_name_entered()
 
         # Check to see if the entered_event exists in the entered_tour
-        query = (select(Event.event_id)
-                 .join(Tour, Tour.tour_id == Event.tour_id)
-                 .where(
-                 and_(
-                      Tour.tour_name == self.entered_tour_name,
-                      Event.stop_nbr == self.entered_stop_nbr
-                      )))
+        session = Session()
+        try:
+            query = (select(Event.event_id)
+                     .join(Tour, Tour.tour_id == Event.tour_id)
+                     .where(
+                     and_(
+                          Tour.tour_name == self.entered_tour_name,
+                          Event.stop_nbr == self.entered_stop_nbr
+                          )))
 
-        result = session.execute(query)
-        check_event = result.scalar()
+            result = session.execute(query)
+            check_event = result.scalar()
+            session.close()
+        except:
+            session.close()
+            raise
 
         # Does the entered_event exist in the entered_tour
         if check_event is not None:
@@ -1123,8 +1160,11 @@ class AddTour:
         # Get tour_id from tour table
         query = (select(Tour.tour_id)
                  .where(Tour.tour_name == self.entered_tour_name))
+
+        session = Session()
         result = session.execute(query)
         entered_tour_id = result.scalar()
+        session.close()
 
         # Get break_id from break table
         query = (select(Break.break_id)
@@ -1137,8 +1177,11 @@ class AddTour:
                              Country.country == self.entered_country,
                              Continent.continent == self.entered_continent
                             )))
+
+        session = Session()
         result = session.execute(query)
         entered_break_id = result.scalar()
+        session.close()
 
         new_event = Event(event_name=self.entered_event_name,
                           tour_id=entered_tour_id,
@@ -1147,13 +1190,13 @@ class AddTour:
                           open_date=self.entered_open_date,
                           close_date=self.entered_close_date)
 
+        session = Session()
         session.add(new_event)
         session.flush()
         session.commit()
+        session.close()
 
     def add_new_round(self):
-        session = Session()
-
         # Check that text is entered for round
         self.was_round_entered()
 
@@ -1161,8 +1204,10 @@ class AddTour:
         query = (select(Round.round)
                  .where(Round.round == self.entered_round))
 
+        session = Session()
         result = session.execute(query)
         check_round = result.scalar()
+        session.close()
 
         # Does the entered_event exist in the entered_tour
         if check_round is not None:
@@ -1173,13 +1218,13 @@ class AddTour:
         # Create an instance of the Round class to add to wsl.round
         new_round = Round(round=self.entered_round)
 
+        session = Session()
         session.add(new_round)
         session.flush()
         session.commit()
+        session.close()
 
     def add_new_heat_details(self):
-        session = Session()
-
         # Was tour, event, round, and heat entered?
         self.was_tour_name_entered()
         self.was_event_name_entered()
@@ -1198,8 +1243,10 @@ class AddTour:
                              HeatDetails.heat_nbr == self.entered_heat_nbr
                             )))
 
+        session = Session()
         result = session.execute(query)
         check_heat_nbr = result.scalar()
+        session.close()
 
         # Does the entered heat number already exist for the round, event, and tour
         if check_heat_nbr is not None:
@@ -1217,14 +1264,19 @@ class AddTour:
                              Event.event_name == self.entered_event_name
                              )))
 
+        session = Session()
         result = session.execute(query)
         entered_event_id = result.scalar()
+        session.close()
 
         # Get the entered_round_id
         query = (select(Round.round_id)
                  .where(Round.round == self.entered_round))
+
+        session = Session()
         result = session.execute(query)
         entered_round_id = result.scalar()
+        session.close()
 
         # Create an instance of the HeatDetails class to add to wsl.heatdetails
         new_heat_details = HeatDetails(heat_nbr=self.entered_heat_nbr,
@@ -1237,13 +1289,13 @@ class AddTour:
                                        wave_max=self.entered_wave_max
                                        )
 
+        session = Session()
         session.add(new_heat_details)
         session.flush()
         session.commit()
+        session.close()
 
     def add_new_surfers_to_heat(self):
-        session = Session()
-
         # was tour, event, round, heat, and surfer entered?
         self.was_tour_name_entered()
         self.was_event_name_entered()
@@ -1263,14 +1315,19 @@ class AddTour:
                             HeatDetails.heat_nbr == self.entered_heat_nbr
                             )))
 
+        session = Session()
         result = session.execute(query)
         entered_heat_id = result.scalar()
+        session.close()
 
         # Does surfer already exist?
         query = (select(Surfers.surfer_id)
                  .where(Surfers.full_name == self.entered_surfer))
+
+        session = Session()
         result = session.execute(query)
         entered_surfer_id = result.scalar()
+        session.close()
 
         if entered_surfer_id is None:
             no_entry_error = (f"\n"
@@ -1285,8 +1342,11 @@ class AddTour:
                         .where(and_(HeatSurfers.heat_id == entered_heat_id,
                                     HeatSurfers.surfer_id == entered_surfer_id
                                     )))
+
+        session = Session()
         result = session.execute(query)
         check_heat_surfer = result.scalar()
+        session.close()
 
         # Does the entered surfer and heat already exist for the round, event, and tour
         if check_heat_surfer is not None:
@@ -1301,13 +1361,13 @@ class AddTour:
         new_surfer_in_heat = HeatSurfers(heat_id=entered_heat_id,
                                          surfer_id=entered_surfer_id)
 
+        session = Session()
         session.add(new_surfer_in_heat)
         session.flush()
         session.commit()
+        session.close()
 
     def add_new_heat_results(self):
-        session = Session()
-
         # Was tour, event, round, heat, and surfer entered?
         self.was_tour_name_entered()
         self.was_event_name_entered()
@@ -1330,8 +1390,10 @@ class AddTour:
                             Surfers.full_name == self.entered_surfer
                             )))
 
+        session = Session()
         result = session.execute(query)
         check_surfer_in_heat = result.scalar()
+        session.close()
 
         # Does the entered surfer and heat already exist for the round, event, and tour
         if check_surfer_in_heat is None:
@@ -1369,8 +1431,10 @@ class AddTour:
                             Surfers.full_name == self.entered_surfer
                             )))
 
+        session = Session()
         result = session.execute(query)
         check_surfer_in_results = result.scalar()
+        session.close()
 
         # Does the entered heat number already exist for the round, event, and tour
         if check_surfer_in_results is not None:
@@ -1394,8 +1458,10 @@ class AddTour:
                             HeatDetails.heat_nbr == self.entered_heat_nbr
                             )))
 
+        session = Session()
         result = session.execute(query)
         entered_heat_id = result.scalar()
+        session.close()
 
         # Get the surfer in heat id
         query = (select(HeatSurfers.surfer_heat_id)
@@ -1412,8 +1478,10 @@ class AddTour:
                             Surfers.full_name == self.entered_surfer
                             )))
 
+        session = Session()
         result = session.execute(query)
         entered_surfer_in_heat_id = result.scalar()
+        session.close()
 
         new_heat_results = HeatResults(heat_id=entered_heat_id,
                                        surfer_in_heat_id=entered_surfer_in_heat_id,
@@ -1437,9 +1505,11 @@ class AddTour:
                                        wave_15=self.entered_wave_15
                                        )
 
+        session = Session()
         session.add(new_heat_results)
         session.flush()
         session.commit()
+        session.close()
 
 
 #######################################################################################################################
@@ -1463,6 +1533,8 @@ class LocationLists:
                        .order_by(Continent.continent) \
                        .all()
 
+        session.close()
+
         continent_list = []
         for continent in query:
             continent_list.append(continent[0])
@@ -1477,11 +1549,11 @@ class LocationLists:
                        .filter(Continent.continent == {self.entered_continent}) \
                        .order_by(Country.country)
 
+        session.close()
+
         country_list = []
         for country in query:
             country_list.append(country[0])
-
-        session.close()
 
         return country_list
 
@@ -1495,11 +1567,11 @@ class LocationLists:
                                Country.country == {self.entered_country}) \
                        .order_by(Region.region)
 
+        session.close()
+
         region_list = []
         for region in query:
             region_list.append(region[0])
-
-        session.close()
 
         return region_list
 
@@ -1515,11 +1587,11 @@ class LocationLists:
                                Region.region == {self.entered_region}) \
                        .order_by(City.city)
 
+        session.close()
+
         city_list = []
         for city in query:
             city_list.append(city[0])
-
-        session.close()
 
         return city_list
 
@@ -1535,11 +1607,11 @@ class LocationLists:
                                 Region.region == {self.entered_region}) \
                         .order_by(Break.break_name)
 
+        session.close()
+
         break_name_list = []
         for break_name in query:
             break_name_list.append(break_name[0])
-
-        session.close
 
         return break_name_list
 
@@ -1568,6 +1640,8 @@ class TourLists:
                        .order_by(Tour.year) \
                        .all()
 
+        session.close()
+
         year_list = []
         for year in query:
             year_list.append(str(year[0]))
@@ -1580,6 +1654,8 @@ class TourLists:
         query = session.query(Tour.tour_name) \
                        .filter(Tour.year == {self.entered_year}) \
                        .order_by(Tour.tour_name) \
+
+        session.close()
 
         tour_name_list = []
         for tour_name in query:
@@ -1595,6 +1671,8 @@ class TourLists:
                        .order_by(Round.round) \
                        .all()
 
+        session.close()
+
         round_list = []
         for round in query:
             round_list.append(round[0])
@@ -1608,6 +1686,8 @@ class TourLists:
                        .join(Tour, Tour.tour_id == Event.tour_id) \
                        .where(and_(Tour.tour_name == self.entered_tour_name)) \
                        .order_by(Event.stop_nbr)
+
+        session.close()
 
         event_name_list = []
         for event_name in query:
@@ -1626,6 +1706,8 @@ class TourLists:
                                    Event.event_name == self.entered_event_name,
                                    Round.round == self.entered_round)) \
                        .order_by(HeatDetails.heat_nbr)
+
+        session.close()
 
         heat_nbr_list = []
         for heat_nbr in query:
@@ -1648,6 +1730,8 @@ class TourLists:
                                    HeatDetails.heat_nbr == self.entered_heat_nbr)) \
                        .order_by(Surfers.full_name)
 
+        session.close()
+
         surfer_in_heat_list = []
         for full_name in query:
             surfer_in_heat_list.append(full_name[0])
@@ -1669,12 +1753,12 @@ class SurferLists:
     @staticmethod
     def return_all_surfers():
         session = Session()
-
-
         query = session.query(Surfers.full_name) \
                        .distinct() \
                        .order_by(Surfers.full_name) \
                        .all()
+
+        session.close()
 
         full_name_list = []
         for full_name in query:

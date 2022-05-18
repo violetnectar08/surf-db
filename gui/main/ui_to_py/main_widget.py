@@ -209,7 +209,9 @@ class MainWidget(QMainWindow, Ui_Form):
                            entered_tour_type=entered_tour_type)
             inst.add_new_tour()
 
+            self.cb_addevent_continent.clear()
             self.cb_addevent_continent.addItems([''] + LocationLists.return_continents())
+            self.cb_addevent_year.clear()
             self.cb_addevent_year.addItems([''] + TourLists.return_tour_years())
             self.slot_cb_addevent_year_on_index_change()
 
@@ -258,7 +260,7 @@ class MainWidget(QMainWindow, Ui_Form):
 
         self.slot_pb_addevent_clear_clicked()
 
-        self.slot_cb_addheat_tour_on_index_change()
+        self.slot_cb_addheat_year_on_index_change()
 
     ####################################################################################################################
     # Add Heat Tab
@@ -798,6 +800,8 @@ class MainWidget(QMainWindow, Ui_Form):
         self.slot_pb_addbreak_clear_clicked()
         self.cb_addevent_continent.clear()
         self.cb_addevent_continent.addItems([''] + LocationLists.return_continents())
+        self.cb_addevent_year.clear()
+        self.cb_addevent_year.addItems([''] + TourLists.return_tour_years())
 
     ####################################################################################################################
     # Add Surfer Tab
