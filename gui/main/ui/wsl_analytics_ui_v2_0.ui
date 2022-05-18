@@ -10,6 +10,12 @@
     <height>853</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -66,21 +72,45 @@ QTabWidget::tab-bar {
     </size>
    </property>
    <widget class="QWidget" name="tab_main">
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
     <attribute name="title">
      <string>Main</string>
     </attribute>
    </widget>
    <widget class="QWidget" name="tab_schedule">
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
     <attribute name="title">
      <string>Schedule</string>
     </attribute>
    </widget>
    <widget class="QWidget" name="tab_heat_analysis">
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
     <attribute name="title">
      <string>Heat Analysis</string>
     </attribute>
    </widget>
    <widget class="QWidget" name="tab_data_entry">
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
     <attribute name="title">
      <string>Data Entry</string>
     </attribute>
@@ -143,12 +173,18 @@ QTabBar::tab:!selected {
 }</string>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>1</number>
      </property>
      <property name="documentMode">
       <bool>true</bool>
      </property>
      <widget class="QWidget" name="tab_entry_event">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <attribute name="title">
        <string>Add Event</string>
       </attribute>
@@ -568,6 +604,12 @@ font: 63 11pt &quot;Verdana&quot;;</string>
       </widget>
      </widget>
      <widget class="QWidget" name="tab_entry_heat">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <attribute name="title">
        <string>Add Heat</string>
       </attribute>
@@ -1017,6 +1059,12 @@ font: 63 11pt &quot;Verdana&quot;;</string>
       </widget>
      </widget>
      <widget class="QWidget" name="tab_entry_results">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <attribute name="title">
        <string>Add Heat Results</string>
       </attribute>
@@ -2270,6 +2318,12 @@ background-color: rgb(185, 131, 255);</string>
       </widget>
      </widget>
      <widget class="QWidget" name="tab_entry_break">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <attribute name="title">
        <string>Add Break</string>
       </attribute>
@@ -2998,6 +3052,12 @@ font: 63 11pt &quot;Verdana&quot;;</string>
       </widget>
      </widget>
      <widget class="QWidget" name="tab_entry_surfer">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <attribute name="title">
        <string>Add Surfer</string>
       </attribute>

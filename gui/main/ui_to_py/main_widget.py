@@ -800,8 +800,6 @@ class MainWidget(QMainWindow, Ui_Form):
         self.slot_pb_addbreak_clear_clicked()
         self.cb_addevent_continent.clear()
         self.cb_addevent_continent.addItems([''] + LocationLists.return_continents())
-        self.cb_addevent_year.clear()
-        self.cb_addevent_year.addItems([''] + TourLists.return_tour_years())
 
     ####################################################################################################################
     # Add Surfer Tab
