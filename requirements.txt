@@ -3,3 +3,4 @@ pymysql
 sqlalchemy
 pyqt5
 cryptography
+bokeh
